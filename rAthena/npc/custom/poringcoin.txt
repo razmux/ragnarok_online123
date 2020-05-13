@@ -1,0 +1,36 @@
+-	shop	custom_seller2	-1,501:20
+prontera.gat,147,190,5	script	Poring Coin Shop	909,{
+	
+	callshop "custom_seller2",1;
+	npcshopattach "custom_seller2";
+	end;
+	OnBuyItem:
+	for(set .@i,0; .@i<getarraysize(.customs); set .@i,.@i+1) {
+		for(set .@d,0; .@d<getarraysize(@bought_nameid); set .@d,.@d+1) {
+			if(@bought_nameid[.@d]==.customs[.@i]) {
+				if(checkweight(@bought_nameid[.@d],@bought_quantity[.@d])) {
+					if(countitem(.CoinID) >= .Price[.@i]*@bought_quantity[.@d]) {
+						delitem .CoinID,.Price[.@i]*@bought_quantity[.@d];
+						getitem @bought_nameid[.@d],@bought_quantity[.@d];
+					} else dispbottom "Necesitas mas "+getitemname(.CoinID)+" ve por ellas.";
+				} else dispbottom "Purchasing these items will put you over the weight limit!";
+			}
+		}
+	}
+	deletearray @bought_quantity, getarraysize(@bought_quantity);
+	deletearray @bought_nameid, getarraysize(@bought_nameid);
+	close;
+
+OnInit:
+	setarray .customs[0],12350,14543,14542,14537,12298,19832,20129,19848,20295,19665,20133,20447,20347,20458,20507,2576,31055,19587;// Enter the ID of customs here
+	set .CoinID,7539; // Enter the ID of the coin here.
+	setarray .Price[0],30,40,40,70,120,150,200,250,250,280,300,350,400,400,1200,1200,1800,2000; // Price for each custom is set to 20 coins
+	npcshopitem "custom_seller2",0,0; // Don't touch any coding beyond here
+	for(set .i,0; .customs[.i]; set .i,.i+1) npcshopadditem "custom_seller2",.customs[.i],.Price[.i];
+	end;
+}
+
+// --------------------------------------------------
+//	Duplicates (Renewal):
+// --------------------------------------------------
+sec_in02,136,173,5	duplicate(Poring Coin Shop)	Poring Coin Shop#dew	508

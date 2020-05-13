@@ -1,0 +1,17 @@
+prontera.gat,164,175,4	script	Mercado	790,{
+misceffect 268;
+		warp "sec_in02",139,163;
+
+
+OnInit:
+	waitingroom "Mercado!",0;
+
+}
+
+// --------------------------------------------------
+//	Duplicates (Renewal):
+// --------------------------------------------------
+dewata,208,183,4	duplicate(Mercado)	Mercado#dew	790
+alberta,104,61,5	duplicate(Mercado)	Mercado#ald	790
+dicastes01,204,175,4	duplicate(Mercado)	Mercado#dis	790
+rachel,114,115,5	duplicate(Mercado)	Mercado#rac	790

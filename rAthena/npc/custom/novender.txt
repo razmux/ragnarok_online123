@@ -1,0 +1,64 @@
+//=============================================
+//eAthena Function
+//============================================
+//Developer By: DiWolf
+//=============================================
+//Código para evitar tiendas en la calle
+//desarrollo
+//=============================================
+function	script	NoVender	{
+
+
+	setcell	"pvp_y_1-4.gat",1,1,312,392,cell_novending,0;
+	setcell "pvp_y_1-4.gat",50,173,59,173,cell_novending,1;
+	setcell "pvp_y_1-4.gat",21,228,21,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",22,228,22,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",23,228,23,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",24,228,24,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",25,228,25,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",26,228,26,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",27,228,28,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",28,228,28,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",29,228,29,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",30,228,30,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",31,228,31,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",32,228,32,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",33,228,33,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",34,228,34,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",35,228,35,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",36,228,36,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",37,228,37,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",38,228,38,239,cell_novending,1;
+	setcell "pvp_y_1-4.gat",39,228,39,239,cell_novending,1;
+	
+	//Parte Central
+	setcell "pvp_y_1-4.gat",40,228,40,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",41,228,41,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",42,228,42,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",43,228,43,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",44,228,44,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",45,228,45,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",46,228,46,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",47,228,47,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",48,228,48,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",49,228,49,249,cell_novending,1;
+	
+	//Calle ---> 
+	setcell "pvp_y_1-4.gat",49,38,49,170,cell_novending,1;
+	setcell "pvp_y_1-4.gat",50,38,50,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",51,38,51,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",52,38,52,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",53,38,53,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",54,38,54,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",55,38,55,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",56,38,56,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",57,38,57,249,cell_novending,1;
+
+	//Espacios que hacen falta
+	setcell "pvp_y_1-4.gat",58,38,58,249,cell_novending,1;
+	setcell "pvp_y_1-4.gat",59,38,59,249,cell_novending,1;
+	//setcell "pvp_y_1-4.gat",49,38,49,170,cell_novending,1;
+
+
+
+}

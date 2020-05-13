@@ -1,0 +1,165 @@
+//===== rAthena Script =======================================
+//= Eden Group Quests - Mission [11 - 25]
+//===== By: ==================================================
+//= L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.5
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= Repetable Quests for Players between Baselevel 11 - 25.
+//===== Additional Comments: =================================
+//= 1.0 First Version.
+//= 1.1 Some little optimization here and there. [Masao]
+//= 1.2 Optimized. [Euphy]
+//= 1.3 Bug fixes. [Capuche]
+//= 1.4 Added support to Para_Team_Mark_ in Eden Group. [Ragno]
+//= 1.5 Added use of F_HasEdenGroupMark function. [Ragno]
+//============================================================
+
+moc_para01,38,38,3	script	Mission [11 - 25]#Tuto	4_BOARD3,{
+	if (!callfunc("F_HasEdenGroupMark")) {
+		mes "- Necesitas tener el item -";
+		mes "- ^4d4dff'Paradise Group Mark'^000000 -";
+		mes "- para poder recibir misiones. Ve con la Secretaria. -";
+		close;
+	}
+	for ( .@i = 11124; .@i < 11134; .@i++ )
+		if (checkquest(.@i,PLAYTIME) == 2) erasequest .@i;
+	for( .@i = 11114; .@i < 11124; .@i++ ) {
+		.@j = checkquest(.@i,HUNTING);
+		if (.@j == 2) {
+			mes " - Debes recoger tu - ";
+			mes " - recompensa antes de comenzar - ";
+			mes " - una nueva mision. - ";
+			mes " ";
+			mes " - Gerente : Spike - ";
+			close;
+		}
+		else if (.@j >= 0) {
+			mes " - Solo puedes solicitar - ";
+			mes " - una mision a la vez. - ";
+			mes " - pero si, todas las de la lista - ";
+			mes " - Gerente  : Spike - ";
+			close;
+		}
+	}
+	if (BaseLevel < 11) {
+		mes " - No hay misiones - ";
+		mes " - abiertas para ti en este momento. - ";
+		close;
+	}
+	if (BaseLevel > 25) {
+		mes " - Estas misiones son demasiado - ";
+		mes " - faciles para tu calibre - ";
+		mes " - busca un poco mas dificiles - ";
+		mes " - para una mision apropiada. - ";
+		close;
+	}
+	mes " - Tablon de anuncios de la mision -";
+	mes " - para principiantes. -";
+	mes " ";
+	mes " - Gerente : Spike -";
+	next;
+	switch(select("Cazar Hornets:Cazar Condors:Patas de Saltamontes:Cazar Worm Tails:Cazar Spores:Control de Pestes:Cazar Mukas:Cazar Familiar:Colectar Feathers:Colectar Posion Spores:Cancelar")) {
+		case 1: callsub L_Quest,11114,"Cazar Hornets"," - Cazar 10 ^4d4dff'Hornets'^000000 - "," - noroeste de Prontera. - ";
+		case 2: callsub L_Quest,11115,"Cazar Condors"," - Cazar 20 ^4d4dff'Condors'^000000 - "," - sur de Morroc. - ";
+		case 3: callsub L_Quest,11116,"Patas de Saltamontes"," - Cazar 10 ^4d4dff'Rockers'^000000 - "," - sur oeste de Prontera and - "," - traer 10 ^4d4dffPatas de Saltamontes^000000. - ";
+		case 4: callsub L_Quest,11117,"Cazar Worm Tails"," - Cazar 20 ^4d4dff'Worm Tails'^000000 - "," - sureste de Payon.- ";
+		case 5: callsub L_Quest,11118,"Cazar Spores"," - Cazar 30 ^4d4dff'Spores'^000000 - "," - alrededor de Payon. - ";
+		case 6: callsub L_Quest,11119,"Control de Pestes"," - Cazar 20 ^4d4dffThief Bug Eggs^000000 - "," - en Prontera Culvert - "," - y traer 10 ^4d4dffChrysalis^000000. - ";
+		case 7: callsub L_Quest,11120,"Cazar Mukas"," - Cazar 20 ^4d4dff'Muka'^000000 - "," - sur de Prontera. - ";
+		case 8: callsub L_Quest,11121,"Cazar Familiars"," - Cazar 20 ^4d4dffFamiliar^000000 - "," - en Culvert Sewers - "," - oeste de Prontera. - ";
+		case 9: callsub L_Quest,11122,"Colectar Feathers"," - Cazar 30 ^4d4dff'Peco Pecos'^000000 - "," - sur de Prontera. - ";
+		case 10: callsub L_Quest,11123,"Colectart Poison Spores"," - Cazar 30 ^4d4dffPoison Spores^000000 - "," - dentro de Geffen Tower y - "," - traer 5 ^4d4dffPoison Spores^000000. - ";
+		case 11:
+			mes " - Deja de leer el tablon de anuncios. - ";
+			close;
+	}
+
+L_Quest:
+	if (checkquest(getarg(0)+10,PLAYTIME) == 1) {
+		mes " - La mision ^4d4dff"+ getarg(1) +"^000000 - ";
+		mes " - esta finalizada por hoy. - ";
+		mes " ";
+		mes " - Gerente : Spike - ";
+		close;
+	}
+	mes " - La mision '"+ getarg(1) +"' - ";
+	for ( .@i = 2; .@i < getargcount(); .@i++ )
+		mes getarg(.@i);
+	mes " ";
+	mes " - Gerente : Spike - ";
+	next;
+	if (select("Hare esta mision.:Buscare otras misiones.") == 2) {
+		mes " - Vamos a buscar -";
+		mes " - otra mision. - ";
+		close;
+	}
+	for ( .@i = 2; .@i < getargcount(); .@i++ )
+		mes getarg(.@i);
+	setquest getarg(0);
+	close;
+}
+
+moc_para01,32,30,4	script	Spike	4_F_CHILD,{
+	for( .@i = 11114; .@i < 11124; .@i++ ) {
+		.@j = checkquest(.@i,HUNTING);
+		if (.@j == 2) {
+			switch(.@i) {
+				case 11114: callsub L_Quest,.@i,"Cazar Hornets",900;
+				case 11115: callsub L_Quest,.@i,"Cazar Condors",1800;
+				case 11116: callsub L_Quest,.@i,"Patas de Saltamontes",1400,940,10;
+				case 11117: callsub L_Quest,.@i,"Cazar Worm Tails",2600;
+				case 11118: callsub L_Quest,.@i,"Cazar Spores",3900;
+				case 11119: callsub L_Quest,.@i,"Extermina Insectos",2900,915,10;
+				case 11120: callsub L_Quest,.@i,"Cazar Mukas",3200;
+				case 11121: callsub L_Quest,.@i,"Cazar Familiars",3200;
+				case 11122: callsub L_Quest,.@i,"Colectar Feathers",5400;
+				case 11123: callsub L_Quest,.@i,"Colectar Poison Spore",6000,7033,5;
+			}
+		}
+		else if (.@j >= 0) {
+			mes "[Spike]";
+			mes "Aun no has terminado tu mision.";
+			mes "Sigue trabajando asi. Ya estas casi listo.";
+			close;
+		}
+	}
+	mes "[Spike]";
+	mes "Estas buscando Trabajo??";
+	mes "Siempre hay muchas cosas que hacer por aqui..";
+	next;
+	mes "[Spike]";
+	mes "Por que no comienzas hablando con la Secretaria Lime?";
+	close;
+
+L_Quest:
+	.@quest_id = getarg(0);
+	if (checkquest(.@quest_id,HUNTING) == 2) {
+		.@item_req = getarg(3,0);
+		.@req_amount = getarg(4,0);
+		if (.@item_req) {
+			if (countitem(.@item_req) < .@req_amount) {
+				mes "[Spike]";
+				mes "No tienes suficiente "+ getitemname(.@item_req) +".";
+				mes "Tu necesitas traer "+ .@req_amount +" "+ getitemname(.@item_req) +".";
+				close;
+			}
+		}
+		mes "[Spike]";
+		mes "Hmm... dejame ver~";
+		mes "Has completado '"+ getarg(1) +"' mision.";
+		next;
+		mes "[Spike]";
+		mes "Buen trabajo~!!";
+		mes "En Mystery RO estamos muy contentos con tu trabajo. Apreciamos lo que has hecho.";
+		mes "Por favor, ayudanos de nuevo. Gracias!";
+		if (.@item_req)
+			delitem .@item_req,.@req_amount;
+		erasequest .@quest_id;
+		setquest .@quest_id+10;
+		getexp getarg(2),0;
+		close;
+	}
+}

@@ -1,0 +1,35 @@
+
+dali,64,113,5	script	Room of Consciousness	4_M_CRU_KNT,{
+
+mes "[^CC0000Caballero Real^000000]";
+
+mes "Hola! Te sientes preparado para";
+mes "Entrar a la instancia ^CC0000Room of Consciousness^000000?";
+
+switch(select("Si", "No, aun no")) {
+
+case 1:
+
+warp "prt_lib_q",88,84;
+
+close;
+
+case 2:
+
+mes "[^CC0000Caballero Real^000000]";
+
+mes "Owh....";
+
+mes "No importa..si no te sientes preparado.";
+
+mes "ve y equipate mejor.";
+
+mes "Vuelve cuando tu cuerpo y mente esten preparados.";
+
+close;
+
+}
+
+end;
+
+}

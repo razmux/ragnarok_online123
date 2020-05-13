@@ -1,0 +1,21 @@
+moc_para01,133,170,5	script	Comandante Arquiem	951,{
+
+mes "[^CC0000Comandante Arquiem^000000]";
+
+mes "Asi que te interesa ayudar ^CC0000Charleston^000000? ";
+mes "Si es asi, podrias ayudarle a recolectar";
+mes "piezas de repuesto de la fabrica!";
+
+switch(select("Si", "No, aun no")) {
+
+case 1:
+
+warp "verus04",78,117;
+
+close;
+
+}
+
+end;
+
+}

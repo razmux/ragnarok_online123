@@ -1,0 +1,102 @@
+//Info sobre Rates
+//============================================================
+
+prt_cas,119,53,3	script	XeMRO Rates	XMAS_SMOKEY_B,{
+	  	set .@npcname$, "[^CC0066Informacion Rates^000000]";
+		mes .@npcname$;
+ 		mes "Muy buen dia, tarde, noche.";
+		mes "Somos parte del Staff de XeMRO RO,";
+		mes "y podemos brindarte informacion relevante.";
+		next;
+		mes .@npcname$;
+		mes "Mi deber es informarte sobre los";
+		mes "Rates que posee este Servidor.";
+		mes "Es decir, el multiplo de veces que esta";
+		mes "aumentada la Experiencia Base, Experiencia Job,";
+		mes "Probabilidad de Drop de Items, de Cartas Normales,";
+		mes "Cartas de MVP, etc.";
+		next;
+		mes .@npcname$;
+		mes "Sin mas, te informo que los Rates";
+ 		mes "son los siguientes:";
+ 		mes "Experiencia Base Ganada Aumentada x25";
+ 		mes "Experiencia Job Ganada Aumentada x25";
+ 		mes "Probabilidad de Drop de Item Aumentado x10";
+ 		mes "Probabilidad de Drop de Carta normal Aumentado x10";
+ 		mes "Probabilidad de Drop Carta MVP Aumentado x0.01";
+ 		next;
+		mes .@npcname$;
+   		mes "Si tienes alguna duda, puedes";
+	    	mes "Consultar el NPC en el Centro de Prontera";
+	  	mes "Llamado [Detector de GM] para buscar un GM";
+  		mes "Online y resolver tus dudas.";
+   		close;
+
+}
+
+
+prt_cas,81,41,2	script	XeMRO Formula	XMAS_SMOKEY_R,{
+	set .@npcname$, "[^003366Informacion Form^000000]";
+	mes .@npcname$;
+ 	mes "Muy buen dia, tarde, noche.";
+	mes "Somos parte del Staff de XeMRO RO,";
+	mes "y podemos brindarte informacion relevante.";
+	next;
+	mes .@npcname$;
+	mes "Mi deber es informarte sobre las";
+	mes "Formulas nuevas que influyen en el";
+	mes "Juego, tanto el daño como el cast.";
+	mes "Introducidas en Renewal (Episodio XX) desde";
+	mes "201X en Adelante.";
+	next;
+	mes .@npcname$;
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+ 	next;
+	mes .@npcname$;
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	close;
+
+}
+	
+sec_in02.gat,24,45,3	script	XeMRO Economia	XMAS_SMOKEY_Y,{
+	set .@npcname$, "[^003366Informacion Economica^000000]";
+	mes .@npcname$;
+ 	mes "Muy buen dia, tarde, noche.";
+	mes "Somos parte del Staff de XeMRO RO,";
+	mes "y podemos brindarte informacion relevante.";
+	next;
+	mes .@npcname$;
+	mes "Mi deber es informarte sobre las";
+	mes "Formulas nuevas que influyen en el";
+	mes "Juego, tanto el daño como el cast.";
+	mes "Introducidas en Renewal (Episodio XX) desde";
+	mes "201X en Adelante.";
+	next;
+	mes .@npcname$;
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+	mes "xxxxxxxxxxxxxxxxxxxx";
+ 	next;
+	mes .@npcname$;
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	mes "zzzzzzzzzzzzzzzzzzzzz";
+   	close;
+	}
+}

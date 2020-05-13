@@ -1,0 +1,76 @@
+/*	[======================================================================] 
+			 ____  _         _              ____       
+			|  _ \(_) _   _ (_)_ __   ___  |  _ \ ___  
+			| | | | |\ \ / /| | '_ \ / _ \ | |_) / _ \ 
+			| |_| | | \ V / | | | | |  __/ |  _ < (_) |
+			|____/|_|  \_/  |_|_| |_|\___| |_| \_\___/  	  
+					_     _     _     _     _  
+				       / \   / \   / \   / \   / \ 
+				      ( R ) ( a ) ( k ) ( a ) ( y )
+				       \_/   \_/   \_/   \_/   \_/  Scripting                                           
+	[======================================================================]	
+		Script: »Seek & Destroy« *2*
+	[======================================================================]
+		Created by: Haizu & Rakay~
+	[======================================================================]
+		Changes by: Haizu & Rakay~
+	[======================================================================]
+		Actualizaciones: • Corregido el Error de Mapas.
+				 • Agregados Algunos Mapas Faltantes.
+				 • Ahora es Acivable por Haizu.				 
+	[======================================================================]
+		Version: 3.1 Testeado y Listo.
+	[======================================================================]
+		Description: Al Activarse, Invoca una Invacion de Poring
+			     en Un Mapa Random y da Premio Random al matar el
+			     Poring Correcto!.
+	[======================================================================]
+		Credits: Este es un Script de uso Libre para Divine, Respetar.
+			 Los Creditos de los Autores. Haizu & Rakay~
+	[======================================================================] */
+
+prontera,117,146,5	script	Seek & Destroy	1002,{
+
+set .@n$,"[^00CCFFSeek & Destroy^000000]";
+	
+if(getgmlevel() >= 80) goto GM_Panel;
+	dispbottom "Solo Un GM puede Acceder.";
+	close;
+	
+GM_Panel:
+	mes .@n$;
+	mes "Hola ^00CCFF"+strcharinfo(0)+"^000000!";
+	mes "Soy ^00CCFFSeek & Destroy^000000.";
+	mes "Desea Activar el Evento?";
+	next;
+		if (select("^00CCFF» Si, Claro «^000000:^00CCFF» No, Gracias «^000000") == 2) close;
+			mes .@n$;
+			mes "Ok! Entonces... Iniciemos. !!!!";
+			close2;
+			goto Start;
+
+Start:
+	set .a$, .Mapas$[rand(getarraysize(.Mapas$))];
+	set .i, .Items$[rand(getarraysize(.Items$))];
+	announce "[» Seek & Destroy «]: La captura al Poring ha Iniciado en "+ .a$ +" ! ",0,0x00CCFF;
+	sleep2 2000;
+	announce "[» Seek & Destroy «]: Corre y captura tus 50 Poring Coins!.",0,0x00CCFF;
+	monster .a$,0,0,"Poring",1002,499;
+	monster .a$,0,0,"Poring",1002,1,"Seek & Destroy::OnPoringDestroy";
+	setmapflag .a$,12; //Start Mapflag no Skill
+	end;
+
+OnPoringDestroy:
+	getitem .i,50;
+	announce "[» Seek & Destroy «]: El Jugador: " + strcharinfo(0) + " ha Destruido al Poring, Obtiene 50 ["+getitemname(.i)+"] y Gana el Evento!",0,0x00CCFF;
+	sleep2 2000;
+	announce "[» Seek & Destroy «]: El Evento Seek & Destroy ha terminado.",0,0x00CCFF;
+	killmonsterall .a$;
+	removemapflag .a$,12; //End Mapflag no Skill
+	end; 
+
+OnInit:
+	setarray .Mapas$[0],"alberta","amatsu","ayothaya","comodo","geffen","gonryun","izlude","morocc","payon","rachel","veins","umbala","yuno","dicastes01";  //Mapas "No Nuevos Mapas"
+	setarray .Items$[0],7539,7539,7539,7539,7539,7539,7539,7539,7539,7539,7539,7539,7539,7539; //Puedes Agregar mas Item si Quieres.
+	end;      
+}

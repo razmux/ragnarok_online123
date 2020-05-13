@@ -1,0 +1,126 @@
+//===== rAthena Script =======================================
+//= Arrow Quivers
+//===== By: ==================================================
+//= Muad_Dib (Prometheus Project); L0ne_W0lf
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena Project
+//===== Description: =========================================
+//= [Official Conversion]
+//= Turns arrows into Arrow Quivers.
+//= Breakdown of Subroutine "S_BuyQuiver"
+//= arg(0): Type of Arrow to be packaged (item ID).
+//= arg(1): How many of each 'getarg(0)' arrow per quiver.
+//= arg(2): The cost of making a 'getarg(0)' quiver.
+//= arg(3): The quiver given by the NPC (item ID).
+//===== Additional Comments: =================================
+//= 1.0 Added Mora NPC. [Euphy]
+//= 1.1 Updated to match the official scripts. [Euphy]
+//============================================================
+
+// Mora :: ep14_1_tre
+//============================================================
+mora,106,117,3	script	Quiver Maker#mora	516,{
+	if (checkweight(1201,1) == 0) {
+		mes "[Quiver Maker]";
+		mes "Llevas demasiadas cosas contigo.";
+		mes "Has un poco de espacio en tu inventario y vuelve. Te contaré algo interesante.";
+		close;
+	}
+	if (MaxWeight - Weight < 2000) {
+		mes "[Quiver Maker]";
+		mes "Pareces agotado con todas esas cosas.";
+		mes "Has un poco de espacio en tu inventario y regresa. Te contaré algo interesante.";
+		close;
+	}
+	mes "[Quiver Maker]";
+	mes "Los aldeanos de Mora piden y piden carcaj de buena calidad. Simplemente no saben cómo funciona el mundo.";
+	mes "No es de extrañar que no sepan nada acerca de los carcajs o también llamados Quiver, solo esparcen mermelada sobre las hojas todo el día.";
+	next;
+	switch(select("Por favor hazme un Quiver.:Que es un Quiver?")) {
+	case 1:
+		mes "[Quiver Maker]";
+		mes "Al fin alguien que aprecia los Quiver!";
+		mes "Puedo crearte Elven Quivers y Hunting Quivers.";
+		mes "Cuál necesitas?";
+		next;
+		switch(select("[ Elven Quiver ]:[ Hunting Quiver ]:No necesito quiver.")) {
+		case 1: callsub S_BuyQuiver,1773,500,500,12575; //Arrow_Of_Elf_Cntr
+		case 2: callsub S_BuyQuiver,1774,500,500,12576; //Hunting_Arrow_Cntr
+		case 3:
+			mes "[Quiver Maker]";
+			mes "Puedes comprar flechas en el comerciante a mi lado.";
+			close;
+		}
+	case 2:
+		mes "[Quiver Maker]";
+		mes "Una flecha puede ser delgada y ligera, pero llevar cientos y miles de flechas es como llevar un camión de metalings.";
+		next;
+		mes "[Quiver Maker]";
+		mes "Pero cuando tienes un carcaj o quiver, puedes poner flechas en ellas y ahorrar peso y espacio.";
+		mes "Si estás interesado en uno, te lo crearé.";
+		close;
+	}
+	end;
+
+S_BuyQuiver:
+	.@item_req = getarg(0);
+	.@req_amount = getarg(1);
+	if (countitem(getarg(0)) < .@req_amount) {
+		mes "[Quiver Maker]";
+		mes "Traeme unas "+ .@req_amount +" "+ getitemname(.@item_req) +" y podré crearte un Quiver.";
+		close;
+	}
+	mes "[Quiver Maker]";
+	mes "Oh, veo que tienes "+ getitemname(.@item_req) +" en tus manos!";
+	mes "Te interesa usar un quiver? Es muy conveniente!";
+	mes "Si te interesa, te puedo cambiar "+ .@req_amount +" de esas flechas por uno de esos Quiver a ^FF3131"+getarg(2)+" de zeny^000000.";
+	next;
+	switch(select("Cambiar todas las Flechas que tengo:Obtener solo un Quiver:No cambiar nada")) {
+	case 1:
+		set .@arrows, countitem(.@item_req);
+		set .@quiver, .@arrows / .@req_amount;
+		set .@arrows_used, .@quiver * .@req_amount;
+		set .@arrow_zeny01, .@quiver * getarg(2);
+		mes "Las flechas que tu tienes : ^3131FF"+.@arrows+"^000000";
+		mes "Los Quiver que te puedo ofrecer : ^3131FF"+.@quiver+"^000000";
+		mes "Zeny necesario para el cambio : ^3131FF"+.@arrow_zeny01+" zeny^000000";
+		next;
+		mes "Aceptas?";
+		next;
+		if(select("Cambiar:No cambiar") == 2) {
+			mes "[Quiver Maker]";
+			mes "Oye, no dudas de mis habilidades, ¿verdad?";
+			close;
+		}
+		break;
+	case 2:
+		set .@quiver, 1;
+		set .@arrows_used, .@req_amount;
+		set .@arrow_zeny01, getarg(2);
+		set .@zeny_mes,1;
+		break;
+	case 3:
+		mes "[Quiver Maker]";
+		mes "Oye, no dudas de mis habilidades, ¿verdad?";
+		close;
+	}
+	if (Zeny < .@arrow_zeny01) {
+		mes "[Quiver Maker]";
+		if (.@zeny_mes == 1)
+			mes "Dije que aceptaría monedas humanas solo para ti, y todavía no quieres gastar el dinero?";
+		else
+			mes "Realmente no esperas conseguir una obra maestra por nada, ¿verdad?";
+		close;
+	}
+	mes "[Quiver Maker]";
+	mes "Oh, aqui estás.";
+	mes "Hay ^3131FFalgo que necesitas saber^000000 - trata de recordarlo.";
+	mes "^FF0000No puedes usar Quivers cuando cargas más del 70%.^000000";
+	mes "Es mejor que tengas eso en mente, o estarás en problemas luego.";
+	set Zeny, Zeny-.@arrow_zeny01;
+	delitem .@item_req,.@arrows_used;
+	getitem getarg(3),.@quiver;
+	close;
+}

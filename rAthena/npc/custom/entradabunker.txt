@@ -1,0 +1,21 @@
+verus01,123,181,5	script	Verity	10078,{
+
+mes "[^CC0000Verity^000000]";
+
+mes "Te gustaria investigar el ^CC0000Underground Bunker^000000? ";
+mes "Si es asi, podria mostrarte la entrada secreta";
+mes "hay mob muy fuerte dentro!";
+
+switch(select("Si", "No gracias")) {
+
+case 1:
+
+warp "un_bunker",97,89;
+
+close;
+
+}
+
+end;
+
+}

@@ -1,0 +1,180 @@
+prontera,147,165,5	script	Elementary	121,{
+
+	function listabonus;
+	function	validarBonus;
+	
+	mes "^FF0000[Elementary]^000000";
+	mes "Que tal amigos, te puedo cambiar el elemento de tu arma..!";
+	next;
+	mes "^FF0000[Elementary]^000000";
+	mes "Yo puedo colocarle uno de los 10 elementos..!";
+	next;
+	mes "^FF0000[Elementary]^000000";
+	mes "Antes de comenzar, recuerda tener equipado el item al cual le asignaras el bonus";
+	next;
+	mes "^FF0000[Elementary]^000000";
+	//se identifica el arma
+	if(getequipid(EQI_HAND_R)==13327 || getequipid(EQI_HAND_R)==1443 || getequipid(EQI_HAND_R)==1498 || getequipid(EQI_HAND_R)==28604 || getequipid(EQI_HAND_R)==1680 || getequipid(EQI_HAND_R)==1839 || getequipid(EQI_HAND_R)==1939 || getequipid(EQI_HAND_R)==1995 || getequipid(EQI_HAND_R)==2009 || getequipid(EQI_HAND_R)==2025 || getequipid(EQI_HAND_R)==13127 || getequipid(EQI_HAND_R)==13327 || getequipid(EQI_HAND_R)==13454 || getequipid(EQI_HAND_R)==16040 || getequipid(EQI_HAND_R)==18130 || getequipid(EQI_HAND_R)==21015 || getequipid(EQI_HAND_R)==28007 || getequipid(EQI_HAND_R)==28007 || getequipid(EQI_HAND_R)==28106 || getequipid(EQI_HAND_R)==28705 ){ // 2017
+		set @typeArma,2017;
+		set @bonusDisp,1;
+		set @listabonus,10;
+	}
+	
+	else {
+		//se verifica que tenga un regalo equipado para acceder al NPC
+		mes "^FF0000No detecto que tengas equipado ningun regalo^000000";
+		close;
+	}
+	
+	cleararray @bonus[0],0,1;
+	mes "Dime lo que deseas hacer";
+	menu "Asignar Bonus",-,"Ver bonus asignados",verbonus;
+	next;
+	mes "^FF0000[Elementary]^000000";
+	mes "Ve que tienes equipado un ^B05D00"+getequipname(EQI_HAND_L)+"^000000. Los bonus que puedes elegir son los siguientes:";
+	next;
+	mes "^FF0000[Elementary]^000000";
+	for(set .@j,1;.@j<=@listabonus;set .@j,.@j+1)
+		listaBonus(.@j); //Imprime los bonus que se pueden elegir
+	//seleccion de Bonus
+	set .@i,0;
+	while(.@i<@bonusDisp){
+		input @bopcion;
+		if( validarBonus(.@i) ){
+			set @bonus[.@i],@bopcion;
+			next;
+			mes "^FF0000[Elementary]^000000";
+			mes "Has seleccionado:";
+			listaBonus(@bopcion);
+			next;
+			mes "^FF0000[Elementary]^000000";
+			for(set .@j,1;.@j<=@listabonus;set .@j,.@j+1)
+				listaBonus(.@j);
+			set .@i,.@i+1;
+		}
+	}
+	//Se asignan los bonus a cada Arma segun sea el caso
+	if(@typeArma == 2017){ //Armas 2017
+		set b1Arma2017,@bonus[0];
+	}
+	next;
+	mes "^FF0000[Elementary]^000000";
+	mes "Ya has seleccionado todos los bonus para tu item";
+	mes "Espero y con esto hayas mejorado tu build";
+	next;
+	mes "^FF0000[Elementary]^000000";
+	mes "Siempre estare aqui de tal manera que puedas cambiar los bonus cuando gustes.";
+	next;
+	mes "^FF0000[Elementary]^000000";
+	mes "Ahh y recuerda quitarte y volverte a poner el item para que los nuevos bonus tomen efecto";
+	close;
+	
+verbonus:
+	next;
+	if(@typeArma == 2017){ //Arma 2017
+		setarray @verbonus[0],b1Arma2017;
+	}
+	mes "^FF0000[Elementary]^000000";
+	mes "Tu ^B05D00"+getequipname(EQI_HAND_L)+"^000000 tiene los siguientes bonus:";
+	for(set .@i,0;.@i<@bonusDisp;set .@i,.@i+1)
+		listaBonus(@verbonus[.@i]);
+	close;
+	
+	function	listaBonus{
+		switch(getarg(0)){
+			case 1: mes "1.-^0000DF Water ^000000";break;
+			case 2: mes "2.-^0000DF Venom ^000000";break;
+			case 3: mes "3.-^0000DF Ghost ^000000";break;
+			case 4: mes "4.-^0000DF Viento ^000000";break;
+			case 5: mes "5.-^0000DF Fuego ^000000";break;
+			case 6: mes "6.-^0000DF Neutral ^000000";break;
+			case 7: mes "7.-^0000DF Shadow ^000000";break;
+			case 8: mes "8.-^0000DF Undead ^000000";break;
+			case 9: mes "9.-^0000DF Holy ^000000";break;
+			case 10: mes "10.-^0000DF Earth ^000000";break;
+		}
+		return;
+	}
+	
+	//Función que verifica que el bonus seleccionado es válido.
+	function	validarBonus{
+		//¿El bonus seleccionado esta entre 1 y 10(Arma 2009), 1 y 18 (Arma 2010) ?
+		if( @bopcion<1 || @bopcion > @listabonus ){
+			next;
+			mes "^FF0000[Elementary]^000000";
+			mes "^FF0000Has seleccionado un numero incorrecto.^000000";
+			next;
+			mes "^FF0000[Elementary]^000000";
+			for(set .@j,1;.@j<=@listabonus;set .@j,.@j+1)
+				listaBonus(.@j);
+			return 0;
+		}
+		//¿El bonus seleccionado es igual a un bonus seleccionado anteriormente?
+		for(set .@c,0; .@c<getarg(0);set .@c,.@c+1){
+			if(@bonus[.@c] == @bopcion){
+				next;
+				mes "^FF0000[Elementary]^000000";
+				mes "^FF0000Ya has seleccionado este bonus.^000000";
+				next;
+				mes "^FF0000[Elementary]^000000";
+				for(set .@j,1;.@j<=@listabonus;set .@j,.@j+1)
+					listaBonus(.@j);
+				return 0;
+			}
+			//Los bonus ATK y daño a demi no pueden ser seleccionados al mismo tiempo.
+			if((@bonus[.@c] == 2 && @bopcion == 13)||(@bonus[.@c] == 13 && @bopcion == 2)){
+				next;
+				mes "^FF0000[Elementary]^000000";
+				mes"^FF0000No puedes seleccionar atk y daño a demihuman juntos.^000000";
+				next;
+				mes "^FF0000[Elementary]^000000";
+				for(set .@j,1;.@j<=@listabonus;set .@j,.@j+1)
+					listaBonus(.@j);
+				return 0;
+			}
+		}
+		return 1;
+	}
+}
+
+
+function	script	ArmaEle	{
+	if(getarg(0) == 2009){ //Arma 2009
+		setarray .@b[0],b1Arma2009;
+	}
+	else if(getarg(0) == 2010){ //Arma 2010
+		setarray .@b[0],b1Arma2010;
+	}
+	else if(getarg(0) == 2011){ //Arma2011
+		setarray .@b[0],b1Arma2011;
+	}
+	else if(getarg(0) == 2017){ //Arma2017
+		setarray .@b[0],b1Arma2017;
+	}
+	else return;
+	for(set .@i,0;.@i<1;set .@i,.@i+1){
+		switch(.@b[.@i]){
+			case 1:bonus bAtkEle,Ele_Water;break;
+			case 2:bonus bAtkEle,Ele_Poison;break;
+			case 3:bonus bAtkEle,Ele_Ghost;break;
+			case 4:bonus bAtkEle,Ele_Wind;break;
+			case 5:specialeffect2 583; sc_start SC_FIREWEAPON,300000,1;break;
+			case 6:bonus bAtkEle,Ele_Neutral;break;
+			case 7:bonus bAtkEle,Ele_Dark;break;
+			case 8:bonus bAtkEle,Ele_Undead;break;
+			case 9:bonus bAtkEle,Ele_Holy;break;
+			case 10:bonus bAtkEle,Ele_Earth;break;
+		}
+	}
+	return;
+}
+
+//6@tower.gat,151,142,2	duplicate(Elementary)	Elementary#1	121
+ayothaya.gat,212,207,5	duplicate(Elementary)	Elementary#1	121
+payon.gat,165,111,5	duplicate(Elementary)	Elementary#2	121
+brasilis.gat,167,218,5	duplicate(Elementary)	Elementary#3	121
+morocc.gat,146,81,5	duplicate(Elementary)	Elementary#4	121
+gonryun.gat,169,135,5	duplicate(Elementary)	Elementary#5	121
+louyang.gat,232,127,5	duplicate(Elementary)	Elementary#6	121
+aldebaran.gat,173,118,5	duplicate(Elementary)	Elementary#7	121
+lighthalzen,151,110,5	duplicate(Elementary)	Elementary#8	121

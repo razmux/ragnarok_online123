@@ -1,0 +1,80 @@
+//===== eAthena Script =======================================
+//= 5 Custom Quest in 1 NPC
+//===== By: ==================================================
+//= Shuji Yagami [Alfonso Gonzalez] [yagami_shuji@hotmail.com]
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= Cualquier Version 
+//===== Test NPC in: =====================================
+//= eAthena SVN TXT 10295 [Trunk]
+//============================================================
+//=	1.0 Primera versión
+//=	1.1 [Fix Bugs]
+//===============================================================================================
+lasagna,229,184,4	script	Nina	725,{
+cutin "job_black_hucke01",2;
+set .nombre$, "[^009900Nina^000000]";
+mes .nombre$;
+switch (eventos) {
+    case 0:
+        mes "Hola! veo que te gustan mis orejitas u////u.";
+        next;
+        mes .nombre$;
+	mes "Necesito que me traigas lo siguiente!";
+        mes "^ff0000500^000000 Black Cat Doll";
+        mes "^ff0000100^000000 Handcuffs";
+        mes "^ff00001^000000 Fortune Sword";
+        mes "^ff00001^000000 Black Cat Ears";
+        mes "^ff00005.000.000^000000 de zeny";
+        next;
+        mes .nombre$;
+        mes "Cuando los traigas, te las podras quedar :3";
+        set eventos, 1;
+        break;
+        
+    case 1:
+        mes "Oh, eres tu denuevo :O ya tienes los objetos ^w^?";
+        next;
+        switch (select("Sí,meow!:Nop")) {
+            case 1:
+		
+                mes .nombre$;
+                if (countitem(7206) >= 500 && countitem(7345) >= 100 && countitem(1223) >= 1 && countitem(5057) >= 1) && (Zeny >= 5000000) { 
+                    mes "OH!! Muchísimas gracias por traer los objetos !!!";
+                
+                    delitem 7206,500;
+                    delitem 7345,100;
+                    delitem 1223,1;
+                    delitem 5057,1;
+		    set Zeny, Zeny - 5000000;
+                    getitem 5360,1;
+		    announce ""+strcharinfo(0)+" ha creado Wickebine's Black Cat Ears, Meow!!",bc_all,0xFF66FF;
+
+		   
+                } else {
+                    mes "No tienes todo lo que necesito -w-!!";
+        mes "^ff0000500^000000 Black Cat Doll";
+        mes "^ff0000100^000000 Handcuffs";
+        mes "^ff00001^000000 Fortune Sword";
+        mes "^ff00001^000000 Black Cat Ears";
+        mes "^ff00005.000.000^000000 de zeny";
+                 // End if
+                close2;
+cutin "job_black_hucke01", 255;
+
+}
+	
+                
+            case 2:
+                mes .nombre$;
+                mes "Bueno pues vuelve cuando los tengas para la recompensa ^w^";
+                close2;
+cutin "job_black_hucke01", 255;
+
+        } // End switch
+        break;
+} // End switch
+close;
+
+} 

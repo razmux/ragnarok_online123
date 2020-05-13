@@ -1,0 +1,118 @@
+//===== Custom Script =======================================
+//= Vendedora de Cartuchos de Rebellion
+//===== By: ==================================================
+//= Mystery Staff
+//===== Compatible With: =====================================
+//= rAthena
+//===== Description: =========================================
+//= Cambia balas elementales por Cartuchos de 500.
+//============================================================
+
+que_ng.gat,185,144,3	script	Rebellion Trader Julia	633,{
+	mes "[^331177Julia^000000]";
+	if (BaseClass == Job_Gunslinger) {
+		mes "Bienvenido joven Pistolero!.";
+		mes "He arribado hace poco a Einbroch,";
+		mes "Soy comerciante de balas elementales";
+		mes "Mas bien, puedo cambiarte balas por cartuchos utiles";
+		mes "para tu Job, dime, Cual te interesa?";
+		next;
+		switch(select("AP Bullet Case:^00AA11Lighting Bullet Case^000000:^0055FFFreezing Bullet Case^000000:^553322Stone Bullet Case^000000:^FF1111Blazing Bullet Case^000000:^DDBB11Purifying Bullet Case^000000:Cancelar")) {
+		case 1: callsub S_Casing,13215,22744;// <bullet id>, <pack id>
+		case 2: callsub S_Casing,13218,22747;
+		case 3: callsub S_Casing,13217,22746;
+		case 4: callsub S_Casing,13219,22748;
+		case 5: callsub S_Casing,13216,22745;
+		case 6: callsub S_Casing,13220,22749;
+		case 7:
+			mes "[^331177Julia^000000]";
+			mes "Bueno, de todos modos,";
+			mes "Llegue para quedarme.";
+			mes "Si necesitas cartuchos solo ven a";
+			mes "verme, unicamente necesito balas.";
+			mes "Hasta luego.";
+			close;
+		}
+	}
+	mes "Eh? Como has llegado aqui?";
+	mes "Yo proveo de cartuchos de balas";
+	mes "para ^331177Gunslingers y Rebellion^000000.";
+	mes "Asi que como entenderas, no puedo";
+	mes "vender para todos los que quieran";
+	mes "balas, solo los jobs mencionados.";
+	next;
+	mes "[^331177Julia^000000]";
+	mes "Ah, de todos modos";
+	mes "Si conoces algun colega";
+	mes "pistolero, mandalo a verme";
+	mes "Las balas siempre nos faltan..";
+	close;
+
+S_Casing:
+	.@bullet_id = getarg(0);
+	.@pack_id = getarg(1);
+
+	mes "[^331177Julia^000000]";
+	mes "Bien camarada! Necesitare";
+	mes callfunc("F_InsertPlural",500,getitemname(.@bullet_id));
+	mes "y 1000 de zeny para hacer 1 "+getitemname(.@pack_id)+", asi que debes estar seguro";
+	mes "que tienes suficientes balas";
+	mes "y zeny para el cambio.";
+	next;
+	mes "[^331177Julia^000000]";
+	mes "Puedes intercambiar "+callfunc("F_InsertPlural",500,getitemname(.@bullet_id))+" y 1000 de zeny";
+	mes "por 1 "+getitemname(.@pack_id)+".";
+	next;
+	mes "[^331177Julia^000000]";
+	mes "Recuerda que no puedo darte";
+	mes "mas de 50 cartuchos";
+	mes "al mismo tiempo, asi que ahora";
+	mes "ingresa el numero de cartuchos";
+	mes "que quieres recibir. Si quieres cancelar, solo escribe ''0.''";
+	next;
+	input .@amount;
+	mes "[^331177Julia^000000]";
+	if (.@amount > 50 || .@amount == 0) {
+		mes "Hey! te lo dije";
+		mes "No puedo darte tantos cartuchos.";
+		mes "Porfavor intenta denuevo, y";
+		mes "ingresa un numero no tan alto";
+		mes "igual o menor a 50.";
+	}
+	else if (countitem(.@bullet_id) >= (500*.@amount)) {
+		if (Zeny >= (1000*.@amount)) {
+			if (checkweight(.@pack_id,.@amount) == 0) {
+				mes "Oh creo que tienes";
+				mes "mucha basura en tu inventario";
+				mes "Debes de vaciarlo un poco";
+				mes "Vaquero, haz espacio y vuelve";
+				mes "Solo asi te podre cambiar";
+				mes "balas por cartuchos, Ok?";
+			} else {
+				mes "Muy bien! aqui tienes";
+				mes "tus cartuchos, gracias";
+				mes "por visitar mi tienda y";
+				mes "espero que mates a muchas personas";
+				mes "con ellas, jeje.";
+				Zeny = Zeny -1000*.@amount;
+				delitem .@bullet_id,(500*.@amount);
+				getitem .@pack_id,.@amount;
+			}
+		} else {
+			mes "Lo siento camarada";
+			mes "No andas con suficiente pasta";
+			mes "para el cambio.";
+			mes "Vuelve a mi cuando tengas zeny";
+			mes "puede que aun tenga algunas para tradear";
+			mes "necesito el zeny.";
+		}
+	} else {
+		mes "Lo siento camarada";
+		mes "No andas con las suficientes";
+		mes "balas para cambiarlas por cartuchos.";
+		mes "Deberias ver tu Storage o bien";
+		mes "ir al Mercado y comprarlas";
+		mes "luego vuelve a verme.";
+	}
+	close;
+}

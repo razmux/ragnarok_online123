@@ -1,0 +1,98 @@
+//####################################################
+//#   						   � #
+//#   ####### ######  ###   ### ###   ### ###   ###  #
+//#   ###    ###  ###  ### ###   ### ###   ### ###   #
+//#   #####  ###  ###   ####      ####      #####    #
+//#   ##     ###  ###  ### ###   ### ###     ###     #
+//#   ##      ######  ###   ### ###   ###   ###      #
+//#                                                  #
+//####################################################
+//v1.0: Allows changing suits to 3rd classes;        #
+//v1.1: Added Xmas and Summer suits;                 #
+//v1.2: Added support to baby 3rd class suits.       #
+//####################################################
+prontera,182,214,4	script	Costume Tercer Job	509,{
+// Normal Jobs
+
+@eac = eaclass();
+if( @eac&EAJL_THIRD ) {
+			
+		
+Lintro:
+	mes "[Super Stylist]";
+	mes "Hola! puedo hacerte ver mejor sabias?";
+	mes "Tengo el poder para costumizar el traje de tu tercera clase.";
+	next;
+	menu "Me interesa.",Laccessroom,"No Gracias.",Lbye,"Super Stylist???",Lwhoareyou;
+
+Laccessroom:
+	// Open the dressing room and sets the dye/style max's depending on the job.
+	opendressroom(0);
+	set @hairdyemax,MaxHairDye;
+	set @bodydyemax,MaxBodyDye;
+
+	// Summoner's only have 6 hair styles.
+	if (BaseClass != Job_Summoner)
+		set @hairstylemax,MaxHairStyle;
+	else
+		set @hairstylemax,6;
+
+	// Only 3rd job's have access to a 2nd body style.
+	// Note: Not all of the new body styles are out. Best to limit only to jobs that do have them.
+	if (
+//	BaseThird == Job_Rune_Knight ||
+//	BaseThird == Job_Warlock ||
+//	BaseThird == Job_Ranger ||
+	BaseThird == Job_Arch_Bishop ||
+	BaseThird == Job_Mechanic ||
+	BaseThird == Job_Guillotine_Cross ||
+	BaseThird == Job_Royal_Guard ||
+//	BaseThird == Job_Sorcerer ||
+//	BaseThird == Job_Minstrel ||
+//	BaseThird == Job_Wanderer ||
+//	BaseThird == Job_Sura ||
+	BaseThird == Job_Genetic
+//	BaseThird == Job_Shadow_Chaser
+	)
+		set @bodystylemax,MaxBodyStyle;
+	else
+		set @bodystylemax,1;
+
+Lmain:
+	mes "[Super Stylist]";
+	mes "Bien, veamos. Para poder cambiar tu traje debes seleccionar en la ventana Second Costume.";
+	next;
+	menu "Cambiar Costume",Lbodystyle,"No gracias.",Lbye;
+
+
+Lbodystyle:
+	mes "[Super Stylist]";
+	mes "Ingresa 0 para volver a la normalidad o ingresa 1 para cambiar.";
+	mes "Numero maximo de estilo = "+@bodystylemax+"";
+	input @bodystyle;
+	if (@bodystyle < 0 || @bodystyle > @bodystylemax) set @bodystyle,0;
+	setlook 13,@bodystyle;
+	next;
+	goto Lmain;
+
+Lbye:
+	mes "[Super Stylist]";
+	mes "Ok then. Ill be here whenever you need to change your look.";
+	close;
+
+Lwhoareyou:
+	mes "[Super Stylist]";
+	mes "Never herd of us?";
+	mes "We super stylist are a new generation of stylist that are able to provide character appearance customization to players.";
+	next;
+	mes "But the difference between us and regular stylist is that we have a dressing room that allows you to try out different styles and dyes freely all together.";
+	mes "This allows you to get a full preview of what your char will look like if you applied all the styles and dyes selected before finalizing what you want.";
+	mes "Better then doing one at a time.";
+	next;
+	mes "Super stylist can also change the appearance of the outfit you wear. We call them body styles. However, only 3rd job characters are offered this service at the moment.";
+	mes "Also we don't have outfits ready for all of these jobs yet since this service is still very new and designs are still being worked on.";
+	mes "Be sure to check back later if a style isnt available for your job as were releasing them one by one.";
+	next;
+	goto Lintro;
+}
+}

@@ -1,0 +1,48 @@
+prontera,156,194,4	script	Detector de GMs	403,{
+cutin "wish_maiden11",2;
+mes "^CC0000[Team Mystery RO]^000000";
+mes " ";
+mes "^2929E8Administracion:^000000";
+
+if(isloggedin(2000002,150041)==1) mes " Escanor ^009900en linea^000000";
+if(isloggedin(2000002,150041)==0) mes " Escanor ^ff0000desconectado^000000";
+if(isloggedin(2000000,150000)==1) mes " Beelzebub ^009900en linea^000000";
+if(isloggedin(2000000,150000)==0) mes " Beelzebub ^ff0000desconectado^000000";
+
+mes "^2929E8Soporte:^000000";
+
+if(isloggedin(2000008,151521)==1) mes " Oheks ^009900en linea^000000";
+if(isloggedin(2000008,151521)==0) mes " Oheks ^ff0000desconectado^000000";
+if(isloggedin(2000177,150414)==1) mes " Naina ^009900en linea^000000";
+if(isloggedin(2000177,150414)==0) mes " Naina ^ff0000desconectado^000000";
+if(isloggedin(2000025,150044)==1) mes " Ambition ^009900en linea^000000";
+if(isloggedin(2000025,150044)==0) mes " Ambition ^ff0000desconectado^000000";
+if(isloggedin(2000010,150025)==1) mes " Sahne ^009900en linea^000000";
+if(isloggedin(2000010,150025)==0) mes " Sahne ^ff0000desconectado^000000";
+
+mes "^2929E8Desarollo:^000000";
+
+if(isloggedin(2000003,150031)==1) mes " Peppercat ^009900en linea^000000";
+if(isloggedin(2000003,150031)==0) mes " Peppercat ^ff0000desconectado^000000";
+
+
+
+mes " ";
+mes "Los ^2929E8GMs estan para ayudarte^000000. Se respetuoso y no hagas spam, te responderemos lo antes posible.";
+close2;
+
+cutin "wish_maiden11", 255;
+
+}
+
+//ayothaya,205,169,5	duplicate(Detector de GMs)	Detector de GMs#01	811
+//payon,194,101,5	duplicate(Detector de GMs)	Detector de GMs#02	811
+//morocc,144,100,5	duplicate(Detector de GMs)	Detector de GMs#03	811
+//pvp_y_1-4,30,236,5	duplicate(Detector de GMs)	Detector de GMs#04	811
+//rachel.gat,122,126,5	duplicate(Detector de GMs)	Detector de GMs#05	811
+//amatsu.gat,216,90,5	duplicate(Detector de GMs)	Detector de GMs#06	811
+//brasilis.gat,196,256,5	duplicate(Detector de GMs)	Detector de GMs#07	811
+//xmas.gat,136,154,5	duplicate(Detector de GMs)	Detector de GMs#08	811
+//dicastes01.gat,198,215,5	duplicate(Detector de GMs)	Detector de GMs#09	811
+//mora.gat,92,75,5	duplicate(Detector de GMs)	Detector de GMs#10	811
+//aldebaran.gat,146,131,5	duplicate(Detector de GMs)	Detector de GMs#11	811

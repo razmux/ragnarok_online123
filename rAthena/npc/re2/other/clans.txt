@@ -1,0 +1,639 @@
+//===== rAthena Script =======================================
+//= Clan masters
+//===== Description: =========================================
+//= The clan master NPCs that allow you to join and leave
+//= one of the clans.
+//===== Changelogs: ==========================================
+//= 1.0 Initial release. [Lemongrass]
+//= 1.1 iRO translation. [RagnarokNova]
+//= 1.2 Dialogue cleanup. [Aleos]
+//= 1.3 Added clan helper. [exneval]
+//============================================================
+
+prontera,134,188,5	script	Helper	416,{
+cutin "bat_crua1",2;
+misceffect 310;
+	mes "[^FF0000Helper^000000]";
+	mes "¿Eres nuevo y necesitas un poco de ayuda?";
+	next;
+	mes "[^FF0000Helper^000000]";
+	mes "Aca adentro te podemos ayudar!";
+	next;
+	mes "[^FF0000Helper^000000]";
+	mes "¡Puedes unirte a un ^FF007FClan de apoyo^000000 y pedir un ^FF007FPack de Bienvenida^000000!";
+	next;
+	mes "[^FF0000Helper^000000]";
+	mes "Entra a esta casa y conoce a los maestros de los mejores clanes de ^FF007FMystery RO^000000!";
+	close2;
+cutin "bat_crua1", 255;
+OnInit:
+	waitingroom "Eres nuevo? Entra Aqui!",0;
+
+
+}
+
+prt_in,33,114,5	script	Naina	10058,{
+	cutin "laperm01.bmp", 2;
+	mes "[Naina]";
+	mes "Hola! Soy Naina, lider de ^3131FFSword Clan^000000 en Mystery RO.";
+	next;
+	switch( select( "Informacion:Entrar.:Salir." ) ){
+		case 1:
+			switch( select( "Que es un clan?:Sobre Sword Clan:Cancelar." ) ){
+				case 1:
+					mes "[Naina]";
+					mes "El ^3131FFClan^000000 es un tipo de gremio dirigido por Mystery RO.";
+					mes "No participan en el Asedio, por lo que los miembros son libres de unirse / abandonar en cualquier momento.";
+					next;
+					mes "[Naina]";
+					mes "Ojalá pudiéramos unirnos al Asedio. Me encantaría volar sobre mi dragón y quemar a todos en mi camino!";
+					mes "Perdon, me emocione!";
+					next;
+					mes "[Naina]";
+					mes "Únete a nosotros, si ningún Clan se adapta a tu gusto.";
+					mes "Si eres nuevo te puedo ayudar con ^3131FFbonus gratis^000000.";
+					next;
+					mes "[Naina]";
+					mes "Las estadísticas de Melee se ofrecen como el nombre ^3131FFSword Clan^000000 solo lo sugiero, porque no todos los miembros son clases de Melee.";
+					mes "No te sientas presionado, solo cuenta conmigo!";
+					next;
+					cutin "laperm02.bmp", 2;
+					mes "[Naina]";
+					mes "Las diferencias en variedad crean la diversión.";
+					mes "Estos raros racimos nunca me aburrieron en mi party.";
+					next;
+					mes "[Naina]";
+					mes "Y quién sabe, podrías conocer a tu alma gemela en el Clan? Hahah!";
+					break;
+				case 2:
+					mes "[Naina]";
+					mes "El ^3131FFSword Clan^000000 apoya principalmente a los aventureros de Melee.";
+					mes "Unete gratis y obten ^FF0000<STR+1, VIT+1, MHP+30, MSP+10>^000000!";
+					next;
+					mes "[Naina]";
+					mes "Recuerde, no hay participación de WoE.";
+					mes "Debes contactar a otros gremios para WoE.";
+					next;
+					mes "[Naina]";
+					mes "Una pregunta?";
+					mes "Emocionado de unirtenos? Hahah!";
+					break;
+				case 3:
+					break;
+			}			
+			break;
+		case 2:
+			mes "[Naina]";
+			mes "Oh, te unirás? Buena elección!";
+			mes "Revisemos la política del clan para comenzar los procedimientos de admisión.";
+			next;
+			mes "[Naina]";
+			mes "^3131FFLos Clanes^000000 no puede participar en el WoE.";
+			mes "Los nuevos miembros reciben estas bonificaciones de estadísticas: ^FF0000<STR+1, VIT+1, MHP+30, MSP+10>^000000.";
+			mes "Quieres entrar?";
+			next;
+			if( select( "Si.:No." ) == 1 ){
+				mes "[Naina]";
+				mes "Puedes unirte y dejar un Clan en cualquier momento, pero si no inicias sesión para ^FF0000más de 2 semanas^000000, tu seras ^FF0000expulsado^000000.";
+				mes "Los maestros del clan existen por la razón, como yo.";
+				mes "Entendido?";
+				next;
+				if( select( "Si.:No." ) == 1 ){
+					mes "[Naina]";
+					mes "Genial, firma tu nombre aquí para registrarte.";
+					next;
+					input .@name$;
+					mes "[Naina]";
+					mes "Asi que eres ^3131FF" + strcharinfo( 0 ) + "^000000! bonito nombre!";
+					mes "Dejame registrarte.";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Naina]";
+						mes "Vuelve a unirte después de que abandones tu actual alianza.";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						cutin "laperm04.bmp", 2;
+						mes "[Naina]";
+						mes "Eh? Oh, estás en un Clan.";
+						mes "No te metas conmigo, no es genial!";
+					}else{
+						cutin "laperm02.bmp", 2;
+						if (clan_join(SWORDCLAN)) {
+							sc_start2 SC_SWORDCLAN, -1, 0, SWORDCLAN;
+							mes "[Naina]";
+							mes "Bienvenidos a ^3131FFSword Clan^000000!";
+							mes "Puede revisar la información del Clan con ^3131FFCtrl+G^000000.";
+							mes "A su servicio!";
+						} else
+							mes "Un error ha ocurrido.";
+					}
+				}else{
+					mes "[Naina]";
+					mes "UH oh. Volvamos al principio.";
+				}
+			}else{
+				cutin "laperm03.bmp", 2;
+				mes "[Naina]";
+				mes "UH oh. Volvamos al principio.";
+			}
+			break;
+		case 3:
+			cutin "laperm01.bmp", 2;
+			mes "[Naina]";
+			mes "Te gustaria salir?";
+			mes "No hay problema. Espero que encuentres el Clan más adecuado.";
+			mes "Listo para salir del nido?";
+			next;
+			if( select( "Continuar.:Cancelar." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					cutin "laperm04.bmp", 2;
+					mes "[Naina]";
+					mes "Espera, ¡no estás con nosotros! Grr, no me hagas respirar fuego hacia ti!";
+				}else if( getcharid( 5 ) != SWORDCLAN ){
+					cutin "laperm04.bmp", 2;
+					mes "[Naina]";
+					mes "Oye, habla con tu maestro del gremio si quieres irte.";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_SWORDCLAN;
+						mes "[Naina]";
+						mes "De acuerdo, ya está hecho. Pero no seamos extraños, está bien?";
+						mes "Fue lindo tenerte!";
+					} else
+						mes "Un error ha ocurrido.";
+				}
+			}
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_SWORDCLAN, -1, 0, SWORDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}
+
+prt_in,35,114,5	script	Ambition	10059,{
+	cutin "debon01.bmp", 2;
+	mes "[Ambition]";
+	mes "Hola soy Ambition, Maestro de ^3131FFArc Wand Clan^000000.";
+	next;
+	switch( select( "Informacion:Entrar.:Abandonar." ) ){
+		case 1:
+			switch( select( "Que son los clan?:sobre Arc Wand Clan:Cancelar." ) ){
+				case 1:
+					mes "[Ambition]";
+					mes "El ^3131FFLos Clanes^000000 son administrados por Mystery RO, no en privado como otros.";
+					mes "Y yo administro uno de ellos.";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Ambition]";
+					mes "...";
+					mes "¿Qué pasa con esa mirada? Tienes un problema?";
+					next;
+					cutin "birman01.bmp", 2;
+					mes "[Sahne]";
+					mes "Hermano, estás asustando a un miembro potencial, sé agradable.";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Ambition]";
+					mes "...";
+					next;
+					cutin "debon01.bmp", 2;
+					mes "[Ambition]";
+					mes "Únete si buscas un lugar para encajar. ^3131FFobtendras bonificaciones gratis^000000. Recuerda que no vamos a WoE.";
+					next;
+					mes "[Ambition]";
+					mes "La mayoría de los miembros son clases ofensivas de Mage como el nombre ^3131FFArc Wand Clan^000000 sugiere, pero eso no es un requisito.";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Sahne]";
+					mes "...Hey, Oheks.";
+					mes "Deja de golpear a mi hermano y ponte a trabajar.";
+					next;
+					cutin "sham03.bmp", 2;
+					mes "[Oheks]";
+					mes "Como sea!";
+					next;
+					cutin "debon02.bmp", 2;
+					mes "[Sahne]";
+					mes "...Hmpf!";
+					mes "Escucha, el maestro del Clan Ballesta es malvado.";
+					next;
+					cutin "sham02.bmp", 2;
+					mes "[Oheks]";
+					mes "¡Dejame, Sahne! No inventes falsos rumores!";
+					next;
+					cutin "birman01.bmp", 2;
+					mes "[Ambition]";
+					mes "Jaja. Ustedes dos están haciendo una escena.";
+					mes "Vamos, volvamos a trabajar chicos.";
+					break;
+				case 2:
+					cutin "debon01.bmp", 2;
+					mes "[Ambition]";
+					mes "El ^3131FFArc Wand Clan^000000 principalmente soporta clases ofensivas de Mago.";
+					mes "Ofrecemos ^FF0000<INT+1, DEX+1, MHP+30, MSP+10>^000000 a nuevos miembros. No pidas más; es la regla del Reino.";
+					next;
+					mes "[Ambition]";
+					mes "^3131FFLos Clanes^000000no pueden participar en WoE.";
+					mes "Si te gusta el Asedio, entonces únete a un gremio regular.";
+					next;
+					mes "[Ambition]";
+					mes "Eso es todo.";
+					break;
+				case 3:
+					break;
+			}
+			break;
+		case 2:
+			cutin "debon01.bmp", 2;
+			mes "[Ambition]";
+			mes "...";
+			mes "Revisemos la política del clan para comenzar los procedimientos de admisión.";
+			next;
+			mes "[Ambition]";
+			mes "^3131FFLos clanes^000000 no pueden participar en WoE.";
+			mes "Los nuevos miembros reciben estas bonificaciones: ^FF0000<INT+1, DEX+1, MHP+30, MSP+10>^000000.";
+			mes "Que te parece?";
+			next;
+			if( select( "Si.:No." ) == 1 ){
+				mes "[Ambition]";
+				mes "Puedes unirte y dejar un Clan en cualquier momento, pero si no inicias sesión para ^FF0000más de 2 semanas^000000, tu seras ^FF0000expulsado^000000.";
+				mes "Estas de acuerdo?";
+				next;
+				if( select( "Si.:No." ) == 1 ){
+					mes "[Ambition]";
+					mes "Firme su nombre aquí.";
+					next;
+					input .@name$;
+					mes "[Ambition]";
+					mes "^3131FF" + strcharinfo( 0 ) + "^000000.....";
+					mes "Bien, déjame invitarte.";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Ambition]";
+						mes "Deja tu gremio primero para unirte a mi Clan, duh.";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						cutin "debon03.bmp", 2;
+						mes "[Ambition]";
+						mes "Ya estás en un Clan. Usted esta bromeando?!";
+						mes "Oh, también puedo ser gracioso - FIRE PILLAR!!!";
+					}else{
+						if (clan_join(ARCWANDCLAN)) {
+							sc_start2 SC_ARCWANDCLAN, -1, 0, ARCWANDCLAN;
+							mes "[Ambition]";
+							mes "Te has unido a la ^3131FFArc Wand Clan^000000.";
+							next;
+							mes "[Ambition]";
+							mes "Puede revisar la información del Clan con ^3131FFCtrl+G^000000.";
+							mes "Entonces no me molestes más tarde.";
+							next;
+							mes "[Ambition]";
+							mes "Eso es todo. Visita a menudo o ser expulsado o Despedido.";
+						} else
+							mes "Un error ha ocurrido.";
+					}
+				}else{
+					mes "[Ambition]";
+					mes "Entonces no te quiero.";
+				}
+			}else{
+				mes "[Ambition]";
+				mes "Dios, escucha la política de nuevo.";
+			}
+			break;
+		case 3:
+			mes "[Ambition]";
+			mes "Quieres irte, eh?";
+			mes "Entiendo, se trata de WoEs. Si no, ¿por qué ... No importa?..";
+			mes "Procesaré tu retiro.";
+			next;
+			if( select( "Continuar.:Cancelar." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					cutin "debon03.bmp", 2;
+					mes "[Ambition]";
+					mes "Los niños traviesos merecen un buen Jupitel Thunder.";
+				}else if( getcharid( 5 ) != ARCWANDCLAN ){
+					cutin "debon02.bmp", 2;
+					mes "[Ambition]";
+					mes "Estás hablando con el árbol equivocado. Ve a tu maestro del Clan.";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_ARCWANDCLAN;
+						mes "[Ambition]";
+						mes "Estás retirado del Clan.";
+						mes "Ahora vete. Ya no tengo ganas de hablar :'(.";
+					} else
+						mes "Un error ha ocurrido.";
+				}
+			}		
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_ARCWANDCLAN, -1, 0, ARCWANDCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}
+
+prt_in,37,114,5	script	Sahne	10060,{
+	cutin "birman01.bmp", 2;
+	mes "[Sahne]";
+	mes "Encantada de conocerte. Soy Sahne, maestra de ^3131FFGolden Mace Clan^000000.";
+	mes "También soy la hermana mayor de Ambition. Ambition se ve duro, pero tiene buen corazón.";
+	next;
+	switch( select( "Informacion:Entrar.:Cancelar." ) ){
+		case 1:
+			switch( select( "Que es un clan?:sobre Golden Mace Clan:Cancelar." ) ){
+				case 1:
+					mes "[Sahne]";
+					mes "El ^3131FFClan^000000 son establecidos por Mystery RO para ayudar a los aventureros a conectarse y compartir información.";
+					next;
+					mes "[Sahne]";
+					mes "Debido a que el Reino dirige el Clan, no hay participación en el Sitio, pero al menos los miembros se les da ^3131FFstats de bonus^000000.";
+					mes "Las bonificaciones de estadística son pequeñas, pero pueden ser muy útiles para los aventureros principiantes.";
+					next;
+					mes "[Sahne]";
+					mes "Nos llamamos ^3131FFGolden Mace Clan^000000, pero no discriminamos a los solicitantes según sus clases.";
+					mes "El nombre es solo para ayudarte a elegir fácilmente tu Clan.";
+					next;
+					cutin "sham02.bmp", 2;
+					mes "[Oheks]";
+					mes "Berman, suficiente con la explicación. Vamos al grano.";
+					next;
+					cutin "debon03.bmp", 2;
+					mes "[Sahne]";
+					mes "...GO!.";
+					next;
+					cutin "sham03.bmp", 2;
+					mes "[Oheks]";
+					mes "Mmm, interesante.";
+					mes "Sahne, llámame cuando puedas!~";
+					next;
+					cutin "birman03.bmp", 2;
+					mes "[Sahne]";
+					mes "Ja ja ja, me disculpo por sus disputas.";
+					next;
+					cutin "birman01.bmp", 2;
+					mes "[Sahne]";
+					mes "Tienes alguna pregunta?";
+					mes "Si estás cansado de viajar solo, ¡únete a nosotros! Puedes unirte y abandonar el Clan en cualquier momento que quieras.";
+					break;
+				case 2:
+					mes "[Sahne]";
+					mes "El ^3131FFGolden Mace Clan^000000principalmente ayudamos a las clases de apoyo.";
+					mes "Ofrecemos ^FF0000<INT+1, LUK+1, MHP+30, MSP+10>^000000 a todos los nuevos.";
+					next;
+					mes "[Sahne]";
+					mes "Como te dije antes, los clanes no pueden unirse a WoE porque ya pertenecen al Reino.";
+					mes "Si quieres estar en WoE, te recomiendo que te unas a un clan regular.";
+					next;
+					mes "[Sahne]";
+					mes "¿Comprenden de qué se tratan los clanes ahora??";
+					break;
+				case 3:
+					break;
+			}
+			break;
+		case 2:
+			mes "[Sahne]";
+			mes "Bien!";
+			mes "Vamos a verificar la política del clan para comenzar los procedimientos de admisión.";
+			next;
+			mes "[Sahne]";
+			mes "^3131FFLos Clanes^000000 no pueden participar en WoE.";
+			mes "Como nuestro nuevo miembro, recibirás las siguientes bonificaciones de estadísticas: ^FF0000<INT+1, LUK+1, MHP+30, MSP+10>^000000.";
+			mes "Te gustaria?";
+			next;
+			if( select( "Si.:No." ) == 1 ){
+				mes "[Sahne]";
+				mes "Puedes unirte y dejar un Clan en cualquier momento, pero si no inicias sesión para ^FF0000en dos semanas^000000, tu seras ^FF0000expulsado^000000.";
+				mes "¿Aceptas mantener una buena posición en el Clan??";
+				next;
+				if( select( "Si.:No." ) == 1 ){
+					mes "[Sahne]";
+					mes "Ahora, escribe tu nombre aquí.";
+					next;
+					input .@name$;
+					mes "[Sahne]";
+					mes "^3131FF" + strcharinfo( 0 ) + "^000000! Que buen nombre!";
+					mes "Bien entonces...";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Sahne]";
+						mes "Oh, no.";
+						mes "Para unirte, primero debes abandonar tu alianza actual.";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						mes "[Sahne]";
+						mes "Ya estás en un Clan.";
+						mes "Estás confundido, entiendes?";
+					}else{
+						if (clan_join(GOLDENMACECLAN)) {
+							sc_start2 SC_GOLDENMACECLAN, -1, 0, GOLDENMACECLAN;
+							cutin "birman02.bmp", 2;
+							mes "[Sahne]";
+							mes "Bienvenido a ^3131FFGolden Mace Clan^000000!";
+							next;
+							mes "[Sahne]";
+							mes "Puede revisar la información del Clan con ^3131FFCtrl+G^000000.";
+							next;
+							mes "[Sahne]";
+							mes "Por favor, recuerda las pocas precauciones que te di, y disfruta de tus actividades con el Clan!";
+						} else
+							mes "Un error ha ocurrido.";
+					}
+				}
+			}
+			break;
+		case 3:
+			mes "[Sahne]";
+			mes "Con la reunión, hay separación.";
+			mes "Espero que hayas disfrutado tu tiempo en el ^3131FFGolden Mace Clan^000000.";
+			mes "Ahora, ¿debo procesar su retiro??";
+			next;
+			if( select( "Continuar.:Cancelar." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					mes "[Sahne]";
+					mes "No puedes abandonar el Clan sin unirte a él primero.";
+				}else if( getcharid( 5 ) != GOLDENMACECLAN ){
+					mes "[Sahne]";
+					mes "Lo siento, pero no puedo quitarte de otro Clan...";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_GOLDENMACECLAN;
+						mes "[Sahne]";
+						mes "No me gustan las despedidas.";
+						mes "Vuelve en cualquier momento a ^3131FFGolden Mace Clan^000000. Estare aqui para ti.";
+					} else
+						mes "Un error ha ocurrido.";
+				}
+			}
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_GOLDENMACECLAN, -1, 0, GOLDENMACECLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}
+
+prt_in,39,114,5	script	Oheks	10027,{
+	cutin "sham01.bmp", 2;
+	mes "[Oheks]";
+	mes "¡Hola! Soy Oheks, maestro de la ^3131FFCrossbow Clan^000000";
+	mes "Que puedo hacer por ti?";
+	next;
+	switch( select( "Informacion:Entrar.:Cancelar." ) ){
+		case 1:
+			switch( select( "Que es un clan?:sobre Crossbow Clan:Cancelar." ) ){
+				case 1:
+					mes "[Oheks]";
+					mes "Los Clanes fueron establecidos por Mystery RO para...";
+					mes "Naina, ¿por qué fueron nuestros ^3131FFclanes^000000 creados?";
+					next;
+					cutin "laperm01.bmp", 2;
+					mes "[Naina]";
+					mes "¿Dormiste en clase? OMG..";
+					mes "Los Clanes ayudan a los aventureros solitarios a conectarse entre sí y compartir información.";
+					next;
+					cutin "sham01.bmp", 2;
+					mes "[Oheks]";
+					mes "A-ha, lo tengo! Gracias, Capitán!";
+					mes "También oíste eso, cierto?";
+					next;
+					mes "[Oheks]";
+					mes "Dirigido por Mystery RO, los clanes no pueden participar en WoE, pero la buena noticia es que los miembros reciben algunos ^3131FFbonus de stats^000000.";
+					next;
+					mes "[Oheks]";
+					mes "En caso de que te preguntes si ^3131FFCrossbow Clan^000000 solo recluta a Archers, no, no lo hace.";
+					mes "Todos los clanes aceptan todas las clases. Puede elegir el que mejor se adapte a sus necesidades.";
+					next;
+					cutin "sham02.bmp", 2;
+					mes "[Oheks]";
+					mes "Eso debería cubrir todo lo que hay que saber.";
+					mes "Sahne, podriamos organizar una instancia..";
+					next;
+					cutin "debon03.bmp", 2;
+					mes "[Sahne]";
+					mes "Claro, porque no xD";
+					next;
+					cutin "sham03.bmp", 2;
+					mes "[Oheks]";
+					mes "Ooh, ¡genial! Asi podre terminar mi build!.";
+					break;
+				case 2:
+					mes "[Oheks]";
+					mes "El ^3131FFCrossbow Clan^000000 es ideal para clases a distancia.";
+					next;
+					mes "[Oheks]";
+					mes "Eh, déjame ver el manual del Clan. Ah, y ofrecemos bonos estadísticos a nuevos miembros: ^FF0000<DEX+1, AGI+1, MHP+30, MSP+10>^000000.";
+					next;
+					mes "[Oheks]";
+					mes "Los clanes no pueden participar en WoE; deberías unirte a un gremio privado para ir a WoE.";
+					mes "Los clanes son para aventureros que odian estar atados.";
+					next;
+					mes "[Oheks]";
+					mes "Tienes alguna pregunta?";
+					break;
+				case 3:
+					break;
+			}
+			break;
+		case 2:
+			mes "[Oheks]";
+			mes "¿Oh si? Buena elección";
+			mes "Revisemos la política del clan para comenzar los procedimientos de admisión.";
+			next;
+			mes "[Oheks]";
+			mes "^3131FFClansmen^000000 no pueden participar en WoE.";
+			mes "Como nuestro nuevo miembro, recibirás las siguientes bonificaciones: ^FF0000<DEX+1, AGI+1, MHP+30, MSP+10>^000000.";
+			mes "Estas de acuerdo?";
+			next;
+			if( select( "Si.:No." ) == 1 ){
+				mes "[Oheks]";
+				mes "Puedes unirte y dejar un Clan en cualquier momento, pero si no inicias sesión en ^FF0000dos semanas^000000, tu seras ^FF0000expulsado^000000.";
+				mes "¿Prometes que mantendrás una buena posición??";
+				next;
+				if( select( "Si.:No." ) == 1 ){
+					mes "[Oheks]";
+					mes "Bien, escribe tu nombre aquí.";
+					next;
+					input .@name$;
+					mes "[Oheks]";
+					mes "^3131FF" + strcharinfo( 0 ) + "^000000..!";
+					mes "Uf, tu caligrafía necesita trabajo. Déjame procesar tu solicitud.";
+					next;
+					if( getcharid( 2 ) ){
+						mes "[Oheks]";
+						mes "Terminaste las cosas con tu gremio?";
+						close;
+					}else if( getcharid( 5 ) != 0 ){
+						mes "[Oheks]";
+						mes "Eh, ya estás en un Clan. Oye, esto no es divertido.";
+					}else{
+						if (clan_join(CROSSBOWCLAN)) {
+							sc_start2 SC_CROSSBOWCLAN, -1, 0, CROSSBOWCLAN;
+							cutin "sham02.bmp", 2;
+							mes "[Oheks]";
+							mes "Bienvenido a ^3131FFCrossbow Clan^000000!";
+							next;
+							cutin "sham01.bmp", 2;
+							mes "[Oheks]";
+							mes "Puede revisar la información del Clan con ^3131FFCtrl+G^000000.";
+							next;
+							mes "[Oheks]";
+							mes "No escojas peleas con otros miembros del clan. Se social.";
+							mes "Si necesitas ayuda, siempre puedes susurrarme, ¿de acuerdo? Nos vemos!";
+						} else
+							mes "Un error ha ocurrido.";
+					}
+				}else{
+					mes "[Oheks]";
+					mes "De acuerdo entonces. Voy a divertirme un poco.";
+				}
+			}else{
+				mes "[Oheks]";
+				mes "Ah, ¿necesitas tiempo para pensar sobre esto? No hay problema.";
+			}
+			break;
+		case 3:
+			mes "[Oheks]";
+			mes "¿Por qué? ¿encontraste un Clan mejor?";
+			mes "Estoy decepcionado, pero es tu decisión. Déjame procesar tu extracción.";
+			next;
+			if( select( "Continuar.:Cancelar." ) == 1 ){
+				if( getcharid( 5 ) == 0 ){
+					cutin "sham04.bmp", 2;
+					mes "[Oheks]";
+					mes "No puedo dejar que te vayas, ni siquiera estás en mi Clan!";
+				}else if( getcharid( 5 ) != CROSSBOWCLAN ){
+					mes "[Oheks]";
+					mes "Lo siento, pero no me meto en el negocio de otros Clanes.";
+				}else{
+					if (clan_leave()) {
+						sc_end SC_CROSSBOWCLAN;
+						mes "[Oheks]";
+						mes "Está hecho.";
+						mes "Si alguna vez nos extrañas, no dudes en volver, de acuerdo?";
+					} else
+						mes "Un error ha ocurrido.";
+				}
+			}
+			break;
+	}
+	close2;
+	cutin "", 255;
+	end;
+
+OnInit:
+	sc_start2 SC_CROSSBOWCLAN, -1, 0, CROSSBOWCLAN, 10000, SCSTART_NOAVOID, getnpcid(0);
+	end;
+}

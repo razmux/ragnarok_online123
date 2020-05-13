@@ -1,0 +1,159 @@
+//////////////////////////////////
+//===== Script =======================================
+//= Atlas Script
+//===== By: ==================================================
+//= Atlas
+//===== Version: =====================================
+//= 1.0
+//===== Compatible =====================================
+//= Hercules - rAthena
+//===== Additional Comments: =================================
+//============================================================
+sec_in02.gat,19,33,4	script	Vincent::recard1	899,{
+
+	set .@NpcName$,"[^8000FFVincent^000000]";
+	
+	cutin "sc_vicente01",2;
+	mes .@NpcName$;
+	mes "Hey, hey, hey!";
+	mes "Tu, ven aqui!";
+	next;
+	cutin "",255;
+	mes "[^0080FF"+strcharinfo(0)+"^000000]";
+	mes	"Quien, yo?";
+	next;
+	cutin "sc_vicente01",2;
+	mes .@NpcName$;
+	mes "Exactamente!";
+	mes "Te interesaria reciclar una carta?";
+	mes "Es decir, tu me das una carta, los materiales y yo te doy un ^B0A361Old Card Album^000000!";
+	next;
+	mes .@NpcName$;
+	mes "Solo necesito:";
+	mes "- Una ^FE2E2ECard^000000 cualquiera";
+	mes "- 35 ^F79F81Poring Coin^000000";
+	mes " ";
+	mes "Que me dices, hay trato?";
+	next;
+	switch(select("Si!:No..")) {
+		case 1:
+			mes .@NpcName$;
+			mes "Que carta quieres reciclar?";
+			next;	
+			deletearray @inventorylist_id;
+			deletearray @inventorylist_count;
+			deletearray @menulist$;
+			getinventorylist;
+			set @j,0;
+			for ( set @i,0; @i < @inventorylist_count ; set @i, @i + 1 ) {
+				if (@inventorylist_id[@i] >= 4001 && @inventorylist_id[@i] <= 4699)||(@inventorylist_id[@i] >= 27012 && @inventorylist_id[@i] <= 27265)||(@inventorylist_id[@i] >= 31006 && @inventorylist_id[@i] <= 31023) {
+					set @menulist$[@j],getitemname(@inventorylist_id[@i]);
+					set @j,@j+1;
+				}
+			}
+			menu @menulist$[0],L_m0,@menulist$[1],L_m1,@menulist$[2],L_m2,@menulist$[3],L_m3,@menulist$[4],L_m4,"^2E64FECancelar^000000",L_exit;
+			end;
+
+L_m0:
+	mes .@NpcName$;
+	mes "Estas seguro de querer reciclar tu";
+	mes "^FE2E2E"+@menulist$[0]+"^000000?";
+	next;
+	menu "Si",-,"No!",L_exit;
+	if ( countitem(7539) < 35 ) goto L_NoCP;
+	delitem @menulist$[0],1;
+	delitem 7539,35;
+	getitem 616,1;
+	mes .@NpcName$;
+	mes "Es un placer hacer negocios contigo!";
+	close2;
+	cutin "",255;
+	end;
+	
+L_m1:
+	mes .@NpcName$;
+	mes "Estas seguro de querer reciclar tu";
+	mes "^FE2E2E"+@menulist$[1]+"^000000?";
+	next;
+	menu "Si",-,"No!",L_exit;
+	if ( countitem(7539) < 35 ) goto L_NoCP;
+	delitem @menulist$[0],1;
+	delitem 7539,35;
+	getitem 616,1;
+	mes .@NpcName$;
+	mes "Es un placer hacer negocios contigo!";
+	close2;
+	cutin "",255;
+	end;
+	
+L_m2:
+	mes .@NpcName$;
+	mes "Estas seguro de querer reciclar tu";
+	mes "^FE2E2E"+@menulist$[2]+"^000000?";
+	next;
+	menu "Si",-,"No!",L_exit;
+	if ( countitem(7539) < 35 ) goto L_NoCP;
+	delitem @menulist$[0],1;
+	delitem 7539,35;
+	getitem 616,1;
+	mes .@NpcName$;
+	mes "Es un placer hacer negocios contigo!";
+	close2;
+	cutin "",255;
+	end;
+	
+L_m3:
+	mes .@NpcName$;
+	mes "Estas seguro de querer reciclar tu";
+	mes "^FE2E2E"+@menulist$[3]+"^000000?";
+	next;
+	menu "Si",-,"No!",L_exit;
+	if ( countitem(7539) < 35 ) goto L_NoCP;
+	delitem @menulist$[0],1;
+	delitem 7539,35;
+	getitem 616,1;
+	mes .@NpcName$;
+	mes "Es un placer hacer negocios contigo!";
+	close2;
+	cutin "",255;
+	end;
+	
+L_m4:
+	mes .@NpcName$;
+	mes "Estas seguro de querer reciclar tu";
+	mes "^FE2E2E"+@menulist$[4]+"^000000?";
+	next;
+	menu "Si",-,"No!",L_exit;
+	if ( countitem(7539) < 35 ) goto L_NoCP;
+	delitem @menulist$[0],1;
+	delitem 7539,35;
+	getitem 616,1;
+	mes .@NpcName$;
+	mes "Es un placer hacer negocios contigo!";
+	close2;
+	cutin "",255;
+	end;
+	
+L_NoCP:
+	mes .@NpcName$;
+	mes "Te faltan ^F79F81Poring Coin^000000,";
+	mes "el trato estaba en unas 35.";
+	close2;
+	cutin "",255;
+	emotion 23,1;
+	end;
+			
+		case 2:
+L_exit:
+			mes .@NpcName$;
+			mes "Vaya vaya, si resulta que no tienes madera para los negocios...";
+			close2;
+			cutin "",255;
+			emotion 23,1;
+			end;
+	}
+	
+OnInit:
+	waitingroom "Reciclador de Cartas",0;
+	end;
+}

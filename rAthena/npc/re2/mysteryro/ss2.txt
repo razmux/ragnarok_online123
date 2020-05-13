@@ -1,0 +1,57 @@
+//= Stylist
+//===== By: ==================================================
+//= Akira
+//===== Current Version: =====================================
+//= 1.1
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+//= A stylist with dress room feature
+//===== Todo: ================================================
+//= Set .@hairstylemaxf and .@hairstylemaxm with the max number of hairstyles of your server for female and male respectively.
+//= Suggestions?
+//===== Additional Comments: =================================
+//= 1.0 First Release
+//= 1.1 Now using eA Job System, Variable Improvements and Blacklist added. Special Thanks to Secrets from rAthena Dev Team
+//===== Contact Info: ========================================
+//= [Akira]
+//= Email: kvictor@protonmail.com
+//============================================================
+prontera,184,213,4	script	Estilista#super_stylist	10041,{
+cutin "shaloshi01",2;
+misceffect 589;
+		setarray .@Styles[1],
+		getbattleflag("max_cloth_color"),
+		getbattleflag("max_hair_style"),
+		getbattleflag("max_hair_color");
+	setarray .@Look[1],
+		LOOK_CLOTHES_COLOR,
+		LOOK_HAIR,
+		LOOK_HAIR_COLOR;
+	set .@s, select(" ~ Color de Ropa: ~ Estilo de Pelo: ~ Color de Pelo");
+	set .@Revert, getlook(.@Look[.@s]);
+	set .@Style,1;
+	while(1) {
+		setlook .@Look[.@s], .@Style;
+		message strcharinfo(0),"Estilo Numero #"+.@Style+".";
+		set .@menu$, " ~ Siguiente (^0055FF"+((.@Style!=.@Styles[.@s])?.@Style+1:1)+"^000000): ~ Anterior (^0055FF"+((.@Style!=1)?.@Style-1:.@Styles[.@s])+"^000000): ~ Saltar a..: ~ Volver al original (^0055FF"+.@Revert+"^000000)";
+		switch(select(.@menu$)) {
+		case 1:
+			set .@Style, ((.@Style != .@Styles[.@s]) ? .@Style+1 : 1);
+			break;
+		case 2:
+			set .@Style, ((.@Style != 1) ? .@Style-1 : .@Styles[.@s]);
+			break;
+		case 3:
+			message strcharinfo(0),"Choose a style between 1 - "+.@Styles[.@s]+".";
+			input .@Style,0,.@Styles[.@s];
+			if (!.@Style)
+				set .@Style, rand(1,.@Styles[.@s]);
+			break;
+		case 4:
+			set .@Style, .@Revert;
+			setlook .@Look[.@s], .@Revert;
+			break;
+		}
+	}
+}

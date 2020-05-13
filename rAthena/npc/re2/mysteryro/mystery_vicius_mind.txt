@@ -1,0 +1,167 @@
+prt_q,243,84,4	script	Bonus Vicious Mind	1_M_WIZARD,{
+	disable_items;
+	mes .nomeEnchant$;
+	mes "Yo puedo encantar tu arma con un elemento.";
+	mes "Requisito: 250.000z";
+	mes "¿Estas interesado?";
+	next;
+	if(select("Si, yo estoy interesado en esto.") == 1){
+		.@id = getequipid(EQI_HAND_R);
+		for(.@i = 0; .@i < .sz; ++.@i){
+			if(.@id == .alloweditems[.@i])
+				.@allowed = 1;
+		}
+		mes .nomeEnchant$;
+		if(.@id == -1) {
+			mes "No tienes nada en la mano.";
+			close;
+		} else if(!.@allowed){
+			mes "No puedes encantar este item.";
+			close;
+		}
+		else if(getequiprandomoption(EQI_HAND_R,0,ROA_ID) && getequiprandomoption(EQI_HAND_R,1,ROA_ID) && getequiprandomoption(EQI_HAND_R,2,ROA_ID)){
+			mes "Tu arma ya está encantada.";
+			close;
+		}
+		mes "¿Esperas encantar tu " + getitemname(.@id) + " con un bonus aleatorio?";
+		next;
+		if(select("Si, prosiga!", "Cancelar") == 1){
+			mes .nomeEnchant$;
+			mes "*mumble mumble*";
+			progressbar "#00FF00",2;
+			next;
+
+			for(.@i = 0; .@i < 3;++.@i){
+				if(getequiprandomoption(EQI_HAND_R,.@i,ROA_ID)) continue;
+					if (Zeny < 2) {
+						mes "Lo lamento, no tienes el zeny suficiente.";
+						close;
+						}
+						
+				set .@skip, 0;
+				set .@idItem, getequipid(EQI_HAND_R);
+				set .@typeOption, 1;
+				set Zeny, Zeny-250000;
+				for(.@a = 0; .@a < getarraysize(.alloweditems); .@a++){
+					for(.@b = 0; .@b < getarraysize(.magic); .@b++){
+						if(.@idItem == .magic[.@b]){
+							set .@typeOption, 1;
+							set .@skip,2;
+							break;
+						}
+					}
+					if(.@skip) break;
+					for(.@b = 0; .@b < getarraysize(.ranged); .@b++){
+						if(.@idItem == .ranged[.@b]){
+							set .@typeOption, 3;
+							set .@skip,1;
+							break;
+						}
+					}
+					if(.@skip) break;
+				}
+				switch(.@i){
+					case 0:
+						callfunc("applyOptions",.@typeOption,0);
+						close;
+					case 1:
+						callfunc("applyOptions",.@typeOption,1);
+						close;
+					case 2:
+						callfunc("applyOptions",.@typeOption,2);
+						close;
+				}
+			}
+			mes .nomeEnchant$;
+			mes "Bonus agregado a tu arma";
+			close;
+		}
+		close;
+	}
+	else{
+		close;
+	}
+	
+OnInit:
+	setarray .alloweditems[0],28605,18121,28706,13328,28008,1800,1450,16041,13128,1600,13455,1400,2026,28107,21016,1900,1996; // Add more item ids here
+	setarray .magic[0],28605,2026,1600;
+	setarray .ranged[0],18121,13328,13128,1900,1996;
+	set .nomeEnchant$,"[Encantadora da Sky Fortress]";
+	.sz = getarraysize(.alloweditems);
+}
+
+function	script	getRandomAttr	{
+	setarray .@attr$[0],"175","176","177","178","179","180","181","182","183","184";
+	return .@attr$[(rand(1,getarraysize(.@attr$))-1)];
+}
+function	script	getRandomRace	{
+	if(getarg(0) == 1) setarray .@attr$[0],"97","98","99","100","101","102","103","104","105","106";
+	else setarray .@attr$[0],"107","108","109","110","111","112","113","114","115","116";
+	return .@attr$[(rand(1,getarraysize(.@attr$))-1)];
+}
+function	script	getRandomEleEnemy	{
+	if(getarg(0) == 1) setarray .@attr$[0],"37","39","41","43","45","47","49","51","53","55";
+	else setarray .@attr$[0],"57","59","61","63","65","67","69","71","73","75";
+	return .@attr$[(rand(1,getarraysize(.@attr$))-1)];
+}
+function	script	getRandomRaceIgnore	{
+	setarray .@attr$[0],"127","137","128","138","129","139","130","140","131","141","132","142","133","143","134","144","135","145","136","146";
+	return .@attr$[(rand(1,getarraysize(.@attr$))-1)];
+}
+function	script	getRandomStat	{
+	setarray .@attr$[0],"3","4","5","6","7","8";
+	return .@attr$[(rand(1,getarraysize(.@attr$))-1)];
+}
+function	script	applyOptions	{
+	//Melee
+	setarray .@enchantgroup1$[0],callfunc("getRandomAttr")+",0",callfunc("getRandomEleEnemy",1)+","+rand(1,20),"169,20","163,0","185,0";
+	setarray .@enchantgroup2$[0],callfunc("getRandomRace",1)+","+rand(1,20),callfunc("getRandomRaceIgnore")+","+rand(1,30),"147,"+rand(16,25),"148,20";
+	setarray .@enchantgroup3$[0],callfunc("getRandomStat")+","+rand(1,10),"17,"+rand(4,47),"24,"+rand(10,19),"164,"+rand(1,20),"16,"+rand(1,5),"170,"+rand(1,20),"171,"+rand(5,20),"172,5";
+	
+	//Magic
+	setarray .@enchantgroupm1$[0],callfunc("getRandomAttr")+",0",callfunc("getRandomRace",2)+",0","169,20","163,0","185,0";
+	setarray .@enchantgroupm2$[0],callfunc("getRandomRace",2)+","+rand(1,20),callfunc("getRandomRaceIgnore")+","+rand(1,30),"151,"+rand(16,25),"152,20";
+	setarray .@enchantgroupm3$[0],callfunc("getRandomStat")+","+rand(1,10),"19,0,"+rand(4,47),"24,"+rand(10,19),"164,"+rand(1,20),"16,"+rand(1,5),"170,"+rand(1,20),"171,"+rand(5,20),"172,5";
+	
+	//Range
+	setarray .@enchantgroupr1$[0],callfunc("getRandomAttr")+",0",callfunc("getRandomEleEnemy",1)+","+rand(1,20),"169,20","163,0","185,0";
+	setarray .@enchantgroupr2$[0],callfunc("getRandomRace",1)+","+rand(1,20),callfunc("getRandomRaceIgnore")+","+rand(1,30),"147,"+rand(16,25),"148,20";
+	setarray .@enchantgroupr3$[0],callfunc("getRandomStat")+","+rand(1,10),"17,"+rand(4,47),"24,"+rand(10,19),"164,"+rand(1,20),"16,"+rand(1,5),"170,"+rand(1,20),"171,"+rand(5,20),"172,5","166,"+rand(13,20);
+	
+	/******************************
+	** Arg 0 = Tipo
+	** Arg 1 = Grupo
+	********************************/
+	switch(getarg(0)){
+		case 1:
+			set .@groupNumber$, getarg(1);
+			set .@group$, ".@"+"enchantgroup"+(atoi(.@groupNumber$)+1)+"$";
+            set .@rand, rand(1,getarraysize(getd(.@group$))) -1;
+            set .@all$, .@group$+"["+.@rand+"]";
+			logmes "Valor de all: "+.@all$;
+			set .@answer$, getd(.@all$);
+			explode(.@opcoes$,.@answer$,",");
+			setrandomoption(EQI_HAND_R,getarg(1),atoi(.@opcoes$[0]),atoi(.@opcoes$[1]),0);
+			return;
+		case 2:
+			set .@groupNumber$, getarg(1);
+			set .@group$, ".@"+"enchantgroup"+(atoi(.@groupNumber$)+1)+"$";
+            set .@rand, rand(1,getarraysize(getd(.@group$))) -1;
+            set .@all$, .@group$+"["+.@rand+"]";
+			logmes "Valor de all: "+.@all$;
+			set .@answer$, getd(.@all$);
+			explode(.@opcoes$,.@answer$,",");
+			setrandomoption(EQI_HAND_R,getarg(1),atoi(.@opcoes$[0]),atoi(.@opcoes$[1]),0);
+			return;
+		case 3:
+			set .@groupNumber$, getarg(1);
+			set .@group$, ".@"+"enchantgroup"+(atoi(.@groupNumber$)+1)+"$";
+            set .@rand, rand(1,getarraysize(getd(.@group$))) -1;
+            set .@all$, .@group$+"["+.@rand+"]";
+			logmes "Valor de all: "+.@all$;
+			set .@answer$, getd(.@all$);
+			explode(.@opcoes$,.@answer$,",");
+			setrandomoption(EQI_HAND_R,getarg(1),atoi(.@opcoes$[0]),atoi(.@opcoes$[1]),0);
+			return;
+	}
+}

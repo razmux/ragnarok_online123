@@ -1,0 +1,51 @@
+payon,192,134,5	script	Whisper Kid	975,{
+	if (checkweight(1201,1) == 0) {
+		mes "Tienes tu inventario lleno.";
+		close;
+	}
+	if (MaxWeight - Weight < 5000) {
+		mes "No tienes demasiado peso para soportar este item.";
+		close;
+	}	
+	disable_items;
+	mes "[Whisper Kid]";
+	mes "Hola, tengo el poder de entregarte este item:";
+	mes "<ITEM>" +getitemname(18538)+ "<INFO>" +18538+"</INFO></ITEM>";
+	next;
+	mes "[Whisper Kid]";
+	mes "Con estos item podras crear un ^ff0000 Spirit Whispers ^000000.";
+	mes "75 <ITEM>" +getitemname(7162)+ "<INFO>" +7162+"</INFO></ITEM>";
+	mes "75 <ITEM>" +getitemname(7321)+ "<INFO>" +7321+"</INFO></ITEM>";
+	mes "50 <ITEM>" +getitemname(523)+ "<INFO>" +523+"</INFO></ITEM>";
+	mes "15 <ITEM>" +getitemname(6075)+ "<INFO>" +6075+"</INFO></ITEM>";	
+	mes "1 <ITEM>" +getitemname(2274)+ "<INFO>" +2274+"</INFO></ITEM>";	
+
+	next;
+	switch(select("Canjear"))
+	{
+		case 1:
+					if (countitem(7162) >= 75 && countitem(7321) >= 75 && countitem(523) >= 50 && countitem(6075) >= 15 && countitem(2274) >= 1) {
+						progressbar "ffff00",5;
+						specialeffect2 EF_REPAIRWEAPON;
+						delitem 7162,75; 
+						delitem 7321,75; 
+						delitem 523,50; 
+						delitem 6075,15;
+						delitem 2274,1; 				
+						getitem 18538,1;
+						close2;
+						end;
+					} else {
+						mes "[Whisper Kid]";
+						mes "No tienes los materiales.";
+						close2;
+						end;
+					}
+
+		
+
+	}
+	OnInit:
+	waitingroom "Whisper Kid Quets !",0;
+
+}

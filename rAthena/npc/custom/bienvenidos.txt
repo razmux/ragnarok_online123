@@ -1,0 +1,10 @@
+prontera.gat,156,178,4	script	xRO	553,{
+
+		mes "Para entrar a nuestro discord debes ingregar la siguiente direccion https://discord.gg/";
+		close2;
+
+
+OnInit:
+	waitingroom "Unete a Discord!",0;
+
+}

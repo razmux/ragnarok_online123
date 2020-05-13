@@ -1,0 +1,60 @@
+iz_int,56,16,3	script	Wendy	861,{
+// Variables
+misceffect 1034;
+cutin "kafra_09",2;
+set	@name$,"^CC0066[Wendy]^000000";	//
+	mes @name$;
+	mes "Hola ^5555FF" + strcharinfo(0) + "^000000! ";
+	mes "Bienvenido a ^FF0000XeM RO^000000!!";
+	mes "Yo te puedo ayudar en el inicio";
+	mes "de tu gran aventura!";
+  	next;
+	mes @name$;
+	mes "^990000Tengo tres caminos diferentes!^000000";
+	mes "   ";
+	mes "El primero es el ^0000FFInicio Completo^000000";
+	mes "el cual consiste en que hagas";
+	mes "en el inicio completo de ^FF0000Renewal^000000.";
+	next;
+	mes @name$;
+	mes "^990000El segundo camino es..^000000";
+	mes "   ";
+	mes "^FF0000Ir directo a la Academia^000000";
+	mes "Donde la Kafra te entregara";
+	mes "los items de inicio y podras";
+	mes "seguir a donde gustes.";
+	next;
+	mes @name$;
+	mes "^990000Y el tercer camino es..^000000";
+	mes "   ";
+	mes "Para las personas que";
+	mes "quieren ^009900Llegar a Prontera rapido^000000.";
+	next;
+	mes @name$;
+	mes "Debes pensarlo ^FF0000MUY^000000 bien como";
+	mes "quieres iniciar y tomar la desicion correcta para ti";
+  	mes "Entonces?.";
+  	menu "^0000FFInicio Completo^000000",si,"^FF0000Ir a la Academia^000000",no,"^009900Llevame a Prontera^000000",test;
+
+si:
+  warp "int_land",85,107;
+  close;
+
+no:
+  warp "iz_ac01_c",100,33;
+  close;
+
+
+test:
+  warp "prt_in",34,108;
+  close2;
+cutin "kafra_09",255;
+
+  }
+
+//	Duplicates (Renewal):
+// --------------------------------------------------
+iz_int01,56,16,3	duplicate(Wendy)	Warper#iz1	861
+iz_int02,56,16,3	duplicate(Wendy)	Warper#iz2	861
+iz_int03,56,16,3	duplicate(Wendy)	Warper#iz3	861
+iz_int04,56,16,3	duplicate(Wendy)	Warper#iz4	861

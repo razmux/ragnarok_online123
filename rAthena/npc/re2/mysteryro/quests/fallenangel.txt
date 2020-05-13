@@ -1,0 +1,82 @@
+nif_in,19,33,4	script	Alexstrasza	465,{
+	set .@npcname$, "[^CC0066Alexstrasza^000000]";
+cutin "3rd_wl_queen01",2;
+misceffect 589;
+specialeffect2 589;
+	if (checkweight(1201,1) == 0) {
+		mes "Tienes tu inventario lleno.";
+		cutin "3rd_wl_queen01", 255;
+		close;
+	}
+	if (MaxWeight - Weight < 5000) {
+		mes "No tienes demasiado peso para soportar este item.";
+		close;
+	}	
+	disable_items;
+	mes .@npcname$;
+	mes "Hola.. siento que tu y yo estamos conectados, asi que me gustaria poder ayudarte y brindarte las";
+	mes "<ITEM>" +getitemname(2589)+ "<INFO>" +2589+"</INFO></ITEM>!";
+	mes "Si eres un angel caido como yo.. ^ff0000demuestramelo humano^000000!";
+	next;
+	mes .@npcname$;
+	mes "Si me traes estos items te podre dar las ^ff0000 Fallen Angel Wings ^000000.";
+	mes "100 <ITEM>" +getitemname(6393)+ "<INFO>" +6393+"</INFO></ITEM>";
+	mes "10 <ITEM>" +getitemname(6380)+ "<INFO>" +6380+"</INFO></ITEM>";
+	mes "100 <ITEM>" +getitemname(6245)+ "<INFO>" +6245+"</INFO></ITEM>";
+	mes "5 <ITEM>" +getitemname(983)+ "<INFO>" +983+"</INFO></ITEM>";
+	mes "30 <ITEM>" +getitemname(6719)+ "<INFO>" +6719+"</INFO></ITEM>";	
+	mes "1 <ITEM>" +getitemname(20718)+ "<INFO>" +20718+"</INFO></ITEM> [1]";
+	mes "9 <ITEM>" +getitemname(7048)+ "<INFO>" +7048+"</INFO></ITEM>";
+	mes "20 <ITEM>" +getitemname(1004)+ "<INFO>" +1004+"</INFO></ITEM>";
+	mes "2 <ITEM>" +getitemname(4171)+ "<INFO>" +4171+"</INFO></ITEM>";
+	mes "20 <ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";
+	mes "20,000,000 zeny";		
+	next;
+	mes "Huh?";
+						if (Zeny >= 20000000) {
+						mes "Si tienes, sigamos...";
+						next;
+					} else {
+						mes "Vuelve cuando tengas todo lo necesario.";
+						
+						close2;
+						cutin "3rd_wl_queen01", 255;
+						end;
+					}
+	switch(select("Obtener"))
+	{
+		case 1:
+					if (countitem(6393) >= 100 && countitem(6380) >= 10 && countitem(6245) >= 100 && countitem(983) >= 5 && countitem(6719) >= 30 && countitem(20718) >= 1 && countitem(7048) >= 9 && countitem(1004) >= 20 && countitem(4171) >= 2 && countitem(7539) >= 20) {
+						progressbar "ffff00",5;
+						specialeffect2 EF_REPAIRWEAPON;
+						delitem 6393,100; 
+						delitem 6380,10; 
+						delitem 6245,100;
+						delitem 983,5; 
+						delitem 6719,30;
+						delitem 20718,1;
+						delitem 7048,9;
+						delitem 1004,20;
+						delitem 4171,2;
+						delitem 7539,20; 
+						set Zeny, Zeny - 20000000;				
+						getitem 2589,1;
+						announce "[Atención] "+strcharinfo(0)+" ha creado las míticas Fallen Angel Wings!",bc_all,0xFFFF99;
+						cutin "3rd_wl_queen01", 255;
+						close2;
+						end;
+					} else {
+						mes .@npcname$;
+						mes "No eres digno aun de tenerlas.";
+						close2;
+						cutin "3rd_wl_queen01", 255;
+						end;
+					}
+
+		
+
+	}
+	OnInit:
+	waitingroom "Angel Caido..",0;
+
+}

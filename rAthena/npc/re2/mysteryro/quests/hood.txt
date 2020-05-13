@@ -1,0 +1,82 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Your Nick [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= v1.0 thanks to QM
+//============================================================
+ 
+ 
+
+brasilis,110,329,5	script	Hood	832,{
+set .nombre$, "[^CC0000Hood^000000]";
+mes .nombre$;
+switch (eventos) {
+    case 0:
+        mes "Hola "+strcharinfo(0)+" como te encuentras amigo?..";
+	mes "Yo puedo ayudarte a conseguir el ^CC0000Musketeer Hat^000000!";
+        next;
+        mes .nombre$;
+	mes "Si te interesa debes traerme lo siguiente!";
+	mes "^ff00001^000000 Hat";
+        mes "^ff000050^000000 Golden Feather";
+        mes "^ff0000100^000000 Soft Feather";
+        mes "^ff000020^000000 Round Feather";
+        mes "^ff00002^000000 Scarlet Dyestuffs";
+	mes "^ff000015^000000 Soft Silk";
+	mes "^ff00001^000000 Rapier [3]";
+        mes "^ff00005.000.000^000000 de zeny";
+        next;
+        mes .nombre$;
+        mes "Cuando me traigas lo siguiente te entregare esta gran armadura!";
+        set eventos, 1;
+        break;
+        
+    case 1:
+        mes "Hola "+strcharinfo(0)+" como te encuentras amigo?..";
+	mes "Yo puedo ayudarte a conseguir el ^CC0000Musketeer Hat^000000!";
+        next;
+        switch (select("Claro!:Por ahora no, gracias.")) {
+            case 1:
+		
+                mes .nombre$;
+                if (countitem(2221) >= 1 && countitem(6394) >= 50 && countitem(7063) >= 100 && countitem(6393) >= 20 && countitem(975) >= 2 && countitem(7166) >= 15 && countitem(1111) >= 1) && (Zeny >= 10000000) { 
+                    mes "Ten aqui tiene, disfrutalo!";
+                
+		    delitem 2221,1;
+		    delitem 6394,50;
+ 		    delitem 7063,100;
+		    delitem 6393,20;
+		    delitem 975,2;
+		    delitem 7166,15;
+		    delitem 1111,1;
+		    set Zeny, Zeny - 10000000;
+                    getitem 5469,1;
+		    announce ""+strcharinfo(0)+" ha obtenido un Musketer Hat!",bc_all,0xFFFF33;
+
+		   
+                } else {
+                    mes "Aun no tienes lo que necesito, ve por ello!";
+        mes "^ff000050^000000 Golden Feather";
+        mes "^ff0000100^000000 Soft Feather";
+        mes "^ff000020^000000 Round Feather";
+        mes "^ff00002^000000 Scarlet Dyestuffs";
+	mes "^ff000015^000000 Soft Silk";
+	mes "^ff00001^000000 Rapier [3]";
+        mes "^ff00005.000.000^000000 de zeny";
+                } // End if
+                break;
+                
+            case 2:
+                mes .nombre$;
+                mes "Bueno, cuando quieras estare aqui!";
+                break;
+        } // End switch
+        break;
+} // End switch
+close;
+} 

@@ -1,0 +1,150 @@
+prt_cas,98,26,2	script	Informaciones 	4_F_LYDIA,{
+  	set .@npcname$, "[^CC0066Informaciones^000000]";
+	cutin "lydia_a", 2;
+	mes .@npcname$;
+	mes "Bienvenido a la";
+	mes "^FF0000Mystery Plaza^000000!";
+	mes "El lugar en Mystery RO donde podrás aprender más sobre las mecánicas";
+	mes "del Ragnarok Online Renewal y del Servidor Mystery RO en general.";
+	mes "Sobre que son tus dudas?";
+	next;
+	set .@str$,"Quieres ver otro NPC para que resuelva tus dudas?";
+	while (1) {
+		switch(select("[ Sobre Mystery RO ]:[ Sobre Renewal ]:Cancelar")) {
+		case 1:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Rates ]:[ Foro ]:[ Discord ]:[ Comandos ]:[ Custom NPCs ]:[ Instancias ]:Menú previo")) {
+				case 1:
+					mes .@npcname$;
+					mes "Te guiaré hacia donde se encuentra quien te ayudará en Rates";
+					mes "se llama "+F_Navi("Mystery Rates","prt_cas,119,53","^0000FF");
+					mes "Por favor sigue las flechas.";
+					navigateto "prt_cas", 119, 53;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 2:
+					mes .@npcname$;
+					mes "Quien más sabe de Foro se llama "+F_Navi("Mystery Foro","prt_cas,118,60","^B9062F")+" y";
+					mes "está por la siguiente posición, sigue el camino.";
+					navigateto "prt_cas",118, 60;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 3:
+					mes .@npcname$;
+					mes "Conoces Discord? tengo al indicado para informarte sobre eso.";
+					mes "Se llama "+F_Navi("Mystery Discord","prt_cas,114,70","^FF5400");
+					mes "Ve siguiendo el camino de flechas.";
+					navigateto "prt_cas",114, 70;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 4:
+					mes .@npcname$;
+					mes "El servidor cuenta con comandos para sus players,";
+					mes "ve con "+F_Navi("Mystery Comandos","prt_cas,105,81","^006400");
+					mes "para saber más de ellos y de cuales dispones.";
+					navigateto "prt_cas",105, 81;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 5:
+					mes .@npcname$;
+					mes "Contamos con NPCs que facilitan tu juego, conocelos hablando";
+					mes "con "+F_Navi("Mystery NPCs","prt_cas,102,72","^7F3300");
+					mes "sigue las flechas hacia él.";
+					navigateto "prt_cas",102, 72;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 6:
+					mes .@npcname$;
+					mes "Nuestro amigo "+F_Navi("Mystery Instancias","prt_cas,92,62")+" sabe todo";
+					mes "sobre las ^800080Instancias^000000 disponibles en Mystery RO.";
+					mes "Ve y conocelas!";
+					navigateto "prt_cas",92, 62;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 7:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 2:
+			set .@loop,1;
+			while (.@loop) {
+				switch(select("[ Formulas ]:[ ASPD ]:[ Cast Delay ]:[ Economía ]:[ Clanes ]:Menú Previo")) {
+				case 1:
+					mes .@npcname$;
+					mes "Las ffffffffff pueden ser muy complicadas,";
+					mes "es por eso que";
+					mes "te lo explicará mucho mejor, solo sigue las flechas.";
+					navigateto "prt_cas",81, 41;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 2:
+					mes .@npcname$;
+					mes "El ASPD también cambió en Renewal,";
+					mes "Nuestro amigo"+F_Navi("Mystery ASPD","prt_cas,118,60")+" te ayudará con información.";
+					mes "Te enviaré hacia él.";
+					navigateto "prt_cas",118, 60;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 3:
+					mes .@npcname$;
+					mes "El Cast Delay igualmente sufre cambios,";
+					mes "Nuestro "+F_Navi("Mystery Cast","prt_cas,118,60","^FF5400")+" tiene información relevante.";
+					navigateto "prt_cas",118, 60;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 4:
+					mes .@npcname$;
+					mes "La economía del servidor la podrás conocer con";
+					mes "el "+F_Navi("Mystery Economía","prt_cas,118,60")+".";
+					navigateto "prt_cas",118, 60;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 5:
+					mes .@npcname$;
+					mes "Existen Clanes para mejorar tu inicio, ve con "+F_Navi("Mystery Clanes","prt_cas,118,60","^006400")+".";
+					mes "para saber más sobre ello.";
+					navigateto "prt_cas",118, 60;
+					specialeffect2 EF_INCAGILITY;
+					sc_start SC_INCREASEAGI,18000,10;
+					next;
+					break;
+				case 6:
+					set .@loop,0;
+					break;
+				}
+			}
+			break;
+		case 3:
+			mes .@npcname$;
+			mes "Disfruta tu estadía en Mystery RO!.";
+			close2;
+			cutin "lydia_a",255;
+			end;
+
+			}
+	}
+}
+

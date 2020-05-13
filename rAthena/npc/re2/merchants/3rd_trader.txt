@@ -1,0 +1,291 @@
+//===== rAthena Script ======================================= 
+//= 3rd Item Seller
+//===== By: ================================================== 
+//= Masao, Mercurial
+//===== Current Version: ===================================== 
+//= 1.5
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Sells some 3rd Job related items:
+//= - Poison Herbs, Rune Stones, Rare Herbs, Points
+//===== Additional Comments: ================================= 
+//= 1.0 First Version.
+//= 1.1 Optimized Poison Herb Salesman NPC
+//= 1.2 Optimized and standardized. [Euphy]
+//= 1.3 Added Malangdo/Mora Points NPC. [Euphy]
+//= 1.4 Updated to match the official scripts. [Euphy]
+//= 1.5 Added Izlude duplicates. [Euphy]
+//= 1.5a Remove useless array & misc. [Capuche]
+//============================================================ 
+
+// Poison Herb Merchants (Guillotine Cross) :: poison_herb_3rd_trader
+//============================================================
+-	script	::phs	-1,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Espera un minuto !! -";
+		mes "- Actualmente estas llevando -";
+		mes "- demasiado items contigo. -";
+		mes "- Por favor vuelve a intentarlo -";
+		mes "- despues de perder peso. -";
+		close;
+	}
+	cutin "nyuang_1", 2;
+	mes "[Poison Herb Merchant]";
+	mes "Aunque no lo paresca,";
+	mes "Soy profesional en la venta de Hierbas venenosas.";
+	mes "Cada hierba te costará 4,000 de zeny.";
+	mes "Cuál te gustaría?";
+	next;
+	.@i = select("[ Nerium ]:[ Rantana ]:[ Makulata ]:[ Seratum ]:[ Scopolia ]:[ Amoena ]:[ ^990099Poison Kit^000000 ]:Cancelar")-1;
+	mes "[Poison Herb Merchant]";
+	if (.@i < 6) {
+		.@item = 7932+.@i;
+		.@price = 4000;
+		.@max = 2000;
+	} else if (.@i == 6) {
+		.@item = 7931;
+		.@price = 5000;
+		.@max = 500;
+		mes "Cada 'Poison Kit' costará 5,000 de zeny.";
+	} else {
+		mes "Bien, ya veo. Vuelve de nuevo~!";
+		cutin "nyuang_1", 255;
+		close;
+	}
+	mes "Cuantas quieres?";
+	mes "Solo puedes comprar un máximo de '"+.@max+"' productos.";
+	mes "o Ingresa '0' si quieres cancelarlo.";
+	next;
+	input .@amount;
+	if (.@amount == 0) {
+		mes "[Poison Herb Merchant]";
+		mes "Cancelamos el trato!";
+		cutin "nyuang_1", 255;
+		close;
+	}
+	if (.@amount > .@max) {
+		mes "[Poison Herb Merchant]";
+		mes "Debes ingresar un número menor a "+callfunc("F_InsertComma",.@max)+"!";
+		cutin "nyuang_1", 255;
+		close;
+	}
+	.@total = .@amount * .@price;
+	if (Zeny < .@total) {
+		mes "[Poison Herb Merchant]";
+		mes "No tienes suficiente dinero.";
+		mes "Ve tu banco y consigue dinero antes de comprar.";
+		cutin "nyuang_1", 255;
+		close;
+	}
+	Zeny = Zeny - .@total;
+	getitem .@item, .@amount;
+	mes "[Poison Herb Merchant]";
+	mes "Gracias, vuelve de nuevo~!";
+	cutin "nyuang_1", 255;
+	close;
+}
+job3_guil01,79,96,3	duplicate(phs)	Poison Herb Merchant	4_F_YUNYANG
+morocc,191,94,4	duplicate(phs)	Poison Herb Merchant#moc	4_F_YUNYANG	//Official: (190,96) -> in a wall
+lhz_in02,16,205,4	duplicate(phs)	Poison Herb Merchant#lhz	4_F_YUNYANG
+
+// Rune Stone Merchants (Rune Knight) :: rune_3rd_trader
+//============================================================
+-	script	::runesale	-1,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Espera un minuto !! -";
+		mes "- Actualmente estas llevando -";
+		mes "- demasiado items contigo. -";
+		mes "- Por favor vuelve a intentarlo -";
+		mes "- despues de perder peso. -";
+		close;
+	}
+	mes "[Rune Merchant]";
+	mes "Hey! estás buscando Runas?!";
+	mes "Tengo en mi arsenal muchas piedras de Runas!";
+	mes "De esas que te servirán como base para crear tus propias Runas!";
+	mes "Que te gustaría?";
+	next;
+	.@i = select("[ Comprar ^FF8000Runas de Calidad^000000 ].:[ Comprar ^404040Runas Comunes^000000 ].");
+	mes "[Rune Merchant]";
+	if (.@i == 1) {
+		mes "Runas base de calidad!";
+		mes "Te costarán 2,500 de zeny cada una!";
+		.@item = 12734; //Runstone_Quality
+		.@price = 2500;
+	} else {
+		mes "Ah, Runas base comunes?";
+		mes "Estas cuestan 1,000 de zeny cada una!";
+		.@item = 12737; //Runstone_Ordinary
+		.@price = 1000;
+	}
+	mes "Cuantas quieres?,";
+	mes "recuerda no sobrepasar";
+	mes "las '2000' runas por compra.";
+	next;
+	input .@amount;
+	if (.@amount == 0) {
+		mes "[Rune Merchant]";
+		mes "No estás interesado? pues vete!";
+		close;
+	}
+	if (.@amount > 2000) {
+		mes "[Rune Merchant]";
+		mes "Estás comprando demasiadas, más de 2,000!";
+		close;
+	}
+	.@total = .@amount * .@price;
+	if (Zeny < .@total) {
+		mes "[Rune Merchant]";
+		mes "Zeny! Zeny!";
+		mes "No tines suficinte!";
+		mes "Ve tu banco primero antes de comprar.";
+		close;
+	}
+	if (!checkweight(.@item,.@amount)) {
+		mes "[Rune Merchant]";
+		mes "Parece que no puedes llevar tantas, que esperas?!";
+		close;
+	}
+	Zeny = Zeny - .@total;
+	getitem .@item, .@amount;
+	mes "[Rune Merchant]";
+	mes "Gracias.";
+	mes "Vuelve cuando quieras más~!";
+	close;
+}
+job3_rune01,90,62,3	duplicate(runesale)	Rune Merchant#job3	4_M_YURI
+prontera,168,228,3	duplicate(runesale)	Rune Merchant#prt	4_M_YURI
+
+// Rare Herb Merchants (Guillotine Cross) :: rare_herb_3rd_trader
+//============================================================
+-	script	::rhc	-1,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Espera un minuto !! -";
+		mes "- Actualmente estas llevando -";
+		mes "- demasiado items contigo. -";
+		mes "- Por favor vuelve a intentarlo -";
+		mes "- despues de perder peso. -";
+		close;
+	}
+	if (Class == Job_Guillotine_Cross || Class == Job_Guillotine_Cross_T || Class == Job_Baby_Cross) {
+		mes "[Rare Poison Herb Collector]";
+		mes "Deambulo por el mundo y colecciono raras hierbas venenosas. Recientemente, comencé a tratar con la hierba llamada Izidor. Si estás interesado, puedes comprarlos.";
+		next;
+		.@i = select("Como puedo comprarlos?:Cambiarlas por [Animal Blood]:Cambiarlas por [Bitter Herb]:Cambiarlas por [Deadly Noxious Herb]:Cambiarlas por [Frozen Rose]:Cambiarlas por [Ment]:Cambiarlas por [Hinalle]")-2;
+		if (.@i == -1) {
+			mes "[Rare Poison Herb Collector]";
+			mes "Puedes comprarlos por 10,000 de zeny y uno de estos artículos raros, Animal Blood, Bitter Herb, Deadly Noxious Herb, Frozen Rose, Ment o una Hinalle.";
+			next;
+			mes "[Rare Poison Herb Collector]";
+			mes "¿Por qué tanto dinero? Eso es solo para darle un poco de respeto a un coleccionista como yo. Ha ha ha...";
+			close;
+		} else {
+			setarray .@exchange[0],702,621,631,749,605,703;
+			.@item = .@exchange[.@i];
+			.@price = 10000;
+
+			mes "[Rare Poison Herb Collector]";
+			mes "Cuantos quieres?";
+			mes "Puedes comprar un máximo de '2000' productos.";
+			mes "Ingresa '0' si quieres cancelarlo.";
+			next;
+			input .@amount;
+			if (.@amount == 0) {
+				mes "[Rare Poison Herb Collector]";
+				mes "Cancelaste el trato.";
+				close;
+			}
+			if (.@amount > 2000) {
+				mes "[Rare Poison Herb Collector]";
+				mes "Tiene que ser un número menor a 2,000!";
+				close;
+			}
+			.@total = .@amount * .@price;
+			if (countitem(.@item) < .@amount || Zeny < .@total) {
+				mes "[Rare Poison Herb Collector]";
+				mes "Hey, vuelve mejor cuando tengas uno de los items que te pido.";
+				close;
+			}
+			mes "[Rare Poison Herb Collector]";
+			mes "Bien, tomare el dimero y el item especial.";
+			delitem .@item, .@amount;
+			Zeny = Zeny - .@total;
+			getitem 709, .@amount; //Izidor
+			close;
+		}
+	}
+	mes "[Rare Poison Herb Collector]";
+	mes "Deambulo por el mundo y colecciono raras hierbas venenosas. Pero no tengo ganas de vender mis hierbas a una persona como tú... ha ha ha...";
+	close;
+}
+job3_guil01,91,93,3	duplicate(rhc)	Rare Herb Collector#job3	1_M_03
+morocc,194,94,3	duplicate(rhc)	Rare Herb Collector#morroc	1_M_03
+
+
+// Point Merchants (Sorcerer) :: point_3rd_trader
+//============================================================
+-	script	::pss	-1,{
+	if (checkweight(1201,1) == 0 || MaxWeight - Weight < 2000) {
+		mes "- Espera un minuto !! -";
+		mes "- Actualmente estas llevando -";
+		mes "- demasiado items contigo. -";
+		mes "- Por favor vuelve a intentarlo -";
+		mes "- despues de perder peso. -";
+		close;
+	}
+	mes "[Point Merchant]";
+	mes "Hola. Estoy vendiendo un catalizador llamado ^FF0000Points^000000 para Sorcerers. Cual te gustaría?";
+	next;
+	.@i = select("[Scarlet Points] 200z:[Lime Green Points] 200z:[Indigo Points] 200z:[Yellow Wish Points] 200z:Cancelar")-1;
+	mes "[Point Merchant]";
+	if (.@i == 4) {
+		mes "No puedes encontrar las cosas que necesitas?";
+		close;
+	}
+	setarray .@itemid[0],6360,6363,6361,6362;
+	setarray .@color$[0],"Scarlet","Lime Green","Indigo","Yellow Wish";
+	mes "Escogiste  el "+.@color$[.@i]+" Points.";
+	mes "Cuantas quieres?";
+	mes "Si quieres cancelar, ingresa 0.";
+	next;
+	input .@amount;
+	mes "[Point Merchant]";
+	if (.@amount == 0) {
+		mes "Has cancelado el trato.";
+		close;
+	}
+	if (Zeny < .@amount*200) {
+		mes "No tienes el dinero suficiente!.";
+		close;
+	}
+	if (!checkweight(.@itemid[.@i],.@amount)) {
+		mes "No tienes suficiente espacio en tu inventario para comprar esta cantidad.";
+		close;
+	}
+	Zeny = Zeny-(.@amount*200);
+	getitem .@itemid[.@i],.@amount;
+	mes "Muchas gracias, nos vemos~!";
+	close;
+}
+gef_tower,105,172,5	duplicate(pss)	Point Merchant#Sorcerer	8_F_GIRL
+geffen,133,93,3	duplicate(pss)	Point Merchant#Geffen	8_F_GIRL
+prt_in,131,66,0	duplicate(pss)	Point Merchant#Prontera	8_F_GIRL
+alberta,105,52,7	duplicate(pss)	Point Merchant#Alberta	8_F_GIRL
+aldebaran,133,114,5	duplicate(pss)	Point Merchant#Aldebaran	8_F_GIRL
+comodo,193,159,5	duplicate(pss)	Point Merchant#Comodo	8_F_GIRL
+geffen,129,49,5	duplicate(pss)	Point Merchant#Geffen	8_F_GIRL
+izlude,138,163,5	duplicate(pss)	Point Merchant#Izlude	8_F_GIRL	// Old coordinates: izlude (135,121)
+izlude_a,138,163,5	duplicate(pss)	Point Merchant#Izlude_a	8_F_GIRL
+izlude_b,138,163,5	duplicate(pss)	Point Merchant#Izlude_b	8_F_GIRL
+izlude_c,138,163,5	duplicate(pss)	Point Merchant#Izlude_c	8_F_GIRL
+izlude_d,138,163,5	duplicate(pss)	Point Merchant#Izlude_d	8_F_GIRL
+malangdo,214,163,5	duplicate(pss)	Point Merchant#Malangdo	8_F_GIRL
+mora,115,118,3	duplicate(pss)	Point Merchant#Mora	8_F_GIRL
+ra_in01,256,273,3	duplicate(pss)	Point Merchant#Rachel	8_F_GIRL
+veins,202,128,5	duplicate(pss)	Point Merchant#Veins	8_F_GIRL
+dicastes01,207,200,5	duplicate(pss)	Point Merchant#Dicastes	8_F_GIRL
+manuk,261,206,3	duplicate(pss)	Point Merchant#Manuk	8_F_GIRL
+splendide,207,160,5	duplicate(pss)	Point Merchant#Splendide	8_F_GIRL
+mid_camp,224,237,3	duplicate(pss)	Point Merchant#Midgard	8_F_GIRL

@@ -1,0 +1,74 @@
+//===== EinherjarRo Scripts ==================================
+//= PvP Ladder
+//===== Author ===============================================
+//= Stolao
+//===== Current Version: =====================================
+//= 3.10
+//===== Compatible With: =====================================
+//= rAthena SVN
+//===== Description: =========================================
+// Configurable Pvp Ladder
+//===== Comments: ============================================
+//= [Stolao]
+//===== Additional Comments: =================================
+//= 3.00 Overhaul
+//= 3.01 Fixed missing "No" for "No Ygg"
+prontera,164,170,3	script	Master	483,{
+cutin "3rd_sura_master",2;
+
+mes "[ ^FF0000PvP Warper^000000 ]";
+mes "Hola, ^5555FF" + strcharinfo(0) + "^000000!";
+mes "Aqui solo entran los verdaderos guerreros.";
+mes "Veamos que tan bueno eres...";
+mes "Estas listo?";
+switch(select("PvP Room ["+getmapusers("guild_vs5")+"/100]:PvP FFA ["+getmapusers("guild_vs3")+"/100]:No.. Que miedo!")) {
+case 1:
+set zz_point,zz_point+1;
+set my_point,zz_point;
+if (getmapusers("guild_vs3") > 255) callsub S_full;
+announce ""+ strcharinfo(0) +" ha entrado al PvP Room",0,0xFF8000;
+warp "guild_vs5" ,0,0;
+close;
+end;
+case 2:
+set zz_point,zz_point+1;
+set my_point,zz_point;
+if (getmapusers("guild_vs5") > 255) callsub S_full;
+announce ""+ strcharinfo(0) +" ha entrado al PvP FFA",0,0xFF8000; //announce and end
+warp "guild_vs3" ,0,0;
+close;
+end;
+case 3:
+close;
+
+S_full:
+mes " ";
+mes "I'm sorry, this arena is full.  Please try again later...";
+close;
+cutin "3rd_sura_master",255;
+
+}
+OnInit:
+while (1) {
+delwaitingroom;
+set .@count, getmapusers("guild_vs3") + getmapusers("guild_vs5");
+waitingroom "PvP Room ["+ .@count + ((.@count==1) ? " User" : " Users") +"]",0;
+sleep 1000;
+}
+}
+// Duplicates
+// --------------------------------------------------
+rachel,134,99,4	duplicate(Champion)	Champion#bra	843,{
+guild_vs5 mapflag nosave
+guild_vs5 mapflag nowarp
+guild_vs5 mapflag nowarpto
+guild_vs5 mapflag noteleport
+guild_vs5 mapflag noreturn
+
+// --------------------------------------------------
+guild_vs3 mapflag nosave
+guild_vs3 mapflag nowarp
+guild_vs3 mapflag nowarpto
+guild_vs3 mapflag noteleport
+guild_vs3 mapflag noreturn
+// --------------------------------------------------

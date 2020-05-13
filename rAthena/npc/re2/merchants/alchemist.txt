@@ -1,0 +1,122 @@
+//===== rAthena Script ======================================= 
+//= Alchemist Shop
+//===== By: ================================================== 
+//= rAthena Dev Team
+//===== Current Version: ===================================== 
+//= 1.0
+//===== Compatible With: ===================================== 
+//= rAthena Project
+//===== Description: ========================================= 
+//= [Official Conversion]
+//= Merchants for Alchemist Materials and Manuals.
+//===== Additional Comments: ================================= 
+//= 1.0 Split Geneticist shop from main file. [Euphy]
+//=     Updated dialogue to match the official script.
+//============================================================ 
+
+// Main NPC :: craft_book_alche_skill_npc
+//============================================================
+alde_alche,31,186,3	script	Craft Book Merchant#alde	883,{
+	mes "[Craft Book Merchant]";
+	mes "Bienvenido!";
+	mes "Me encargo de vender";
+	mes "^0000FFLibros Especiales^000000 para los Genetics.";
+	next;
+	mes "[Craft Book Merchant]";
+	mes "Ellos tienen algunas Skills,";
+	mes "como por ejemplo ^FF007F[Special Pharmacy]^000000 o ^FF007F[Mix Cooking]^000000";
+	mes "que requieren ciertos libros para ser Activadas.";
+	next;
+	mes "[Craft Book Merchant]";
+	mes "Mientras más libros tengas,";
+	mes "más skills podrás usar!";
+	mes "Y pues, sólo vendo libros,";
+	mes "por ende, yo ^FF0000no vendo los ingredientes^000000 para las skills.";
+	next;
+	mes "[Craft Book Merchant]";
+	mes "Quieres echar un vistazo a los libros que tengo disponibles?";
+	mes "Antes, recuerda que los nombres de los libros pueden variar";
+	mes "Siendo ^FF0000Explosive Health Increase Research Book el mismo que How to Increase Stamina^000000";
+	mes "O ^0000FFEnergy Drink Recipe lo mismo que How To Increse Vitality^000000";
+	next;
+	if(select("Claro, entiendo.:No, otro día mejor.") == 2) {
+		mes "[Craft Book Merchant]";
+		mes "Gracias por visitar mi tienda.";
+		mes "Ten cuidado en tus aventuras!";
+		close;
+	}
+	if (checkweight(1201,1) == 0) {
+		mes "[Craft Book Merchant]";
+		mes "Lo siento pero tienes el inventario un poco lleno.";
+		mes "Por favor vacía tu inventario antes.";
+		close;
+	}
+	if (MaxWeight - Weight < 2500) {
+		mes "[Craft Book Merchant]";
+		mes "Por favor vacía tu inventario antes.";
+		close;
+	}
+	mes "[Craft Book Merchant]";
+	mes "Bueno entonces, aqui tienes una lista de los libros que tengo disponibles.";
+	next;
+	switch(select("[^CC0000Apple Bomb Craft Book^000000] 100,000 zeny:[^666600Pineapple Bomb Craft Book^000000] 100,000 zeny:[^994C00Coconut Bomb Craft Book^000000] 100,000 zeny:[^66CC00Melon Bomb Craft Book^000000] 100,000 zeny:[^FFFF00Banana Bomb Craft Book^000000] 100,000 zeny:[^000099How To Grow Plant Genes Manual^000000] 100,000 zeny:[^99004CHow To Make High Quality Pot Manual^000000] 100,000 zeny:[Mix Cooking Book] 100,000 zeny:[^CC0000Explosive Health Increase Research Book^000000] 100,000 zeny:[^004C99Energy Drink Recipe^000000] 100,000 zeny:Cerrar")){
+	case 1: set .@item,6279; break;
+	case 2: set .@item,6280; break;
+	case 3: set .@item,6281; break;
+	case 4: set .@item,6282; break;
+	case 5: set .@item,6283; break;
+	case 6: set .@item,6284; break;
+	case 7: set .@item,6285; break;
+	case 8: set .@item,11022; break;
+	case 9: set .@item,11023; break;
+	case 10: set .@item,11024; break;
+	case 11:
+		mes "[Craft Book Merchant]";
+		mes "Gracias por patrocinarme.";
+		mes "Vuelve luego.";
+		close;
+	}
+	mes "[Craft Book Merchant]";
+	mes "^0000FF["+getitemname(.@item)+"] cuesta";
+	mes "100,000 zeny.";
+	mes "Cuantos de estos deseas adquirir?";
+	next;
+	input .@amount;
+	if (.@amount == 0) {
+		mes "[Craft Book Merchant]";
+		mes "Sigue viendo, quizas necesitas otro tipo de libro?";
+		close;
+	}
+	if (.@amount < 1 || .@amount > 99 ){
+		mes "[Craft Book Merchant]";
+		mes "No puedes comprar más de 100 a la vez!";
+		close;
+	}
+	mes "[Craft Book Merchant]";
+	mes "Has ingresado "+.@amount+"x ^0000FF["+getitemname(.@item)+"]^000000 para ser adquirido.";
+	mes "Te gustaría continuar con la compra?";
+	next;
+	if (select("Si:No") == 1) {
+		set .@total, .@amount * 100000;
+		if (Zeny < .@total) {
+			mes "[Craft Book Merchant]";
+			mes "Oh! que veo, no tienes suficiente dinero.";
+			close;
+		}
+		if (checkweight(.@item,.@amount) == 0){
+			mes "[Craft Book Merchant]";
+			mes "Parece que llevas demasiadas cosas.";
+			mes "Por favor hace un espacio en tu inventario.";
+			close;
+		}
+		mes "[Craft Book Merchant]";
+		mes "Gracias por tu patrocinio.";
+		set Zeny,Zeny - .@total;
+		getitem .@item,.@amount;
+		close;
+	}
+	mes "[Craft Book Merchant]";
+	mes "Bueno, toma tu tiempo";
+	mes "antes de tomar la decisión.";
+	close;
+}

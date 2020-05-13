@@ -1,0 +1,86 @@
+//===== eAthena Script =======================================
+//= Flower Event
+//===== By: ==================================================
+//= Colundrum/ratalaika
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= Any eAthena Version
+//===== Description: =========================================
+//= Event about kill flowers
+//===== Additional Comments: =================================
+//= No comments yet
+//============================================================
+
+sec_in02,15,30,4	script	Flower Evento	971,{
+
+initnpctimer;
+OnTimer0:
+announce "test'.",0;
+end;
+
+OnTimer1000:
+   enablenpc "Event Flower";
+   announce "test",0;
+   end;
+
+OnTimer60000:
+   stopnpctimer; //we disconnect the timer
+   disablenpc "Event Flower";
+   monster "guild_vs2",153,182,"Event Flower",1083,150,"announce2::OnMobDead";
+   end;
+}
+
+-	script	announce2	-1,{
+
+OnMobDead:
+   set $trava,getmapmobs("guild_vs2");
+   set $trava, $trava - 1;
+   set @z, @z + 1; // +1 ???
+   if(@z == 21) {
+      goto prize;
+   } // Mobs for the Victory 21=20,31=30....
+
+   if($trava < 10) {
+      goto resp;
+   } // Check on grasses.
+
+   end;
+
+resp:
+   monster "guild_vs2",153,182,"Event Flower",1083,150,"announce2::OnMobDead";
+   end;
+
+prize:
+
+   announce " " + strcharinfo (0) + " a ganado el evento Flower, Felicidades!",0;
+
+   killmonster "guild_vs2","All";
+   getitem 674,1; // Prize ID ,How much
+   end;
+}
+
+sec_in02,19,30,4	script	Event Flower	72,{
+
+   mes "El evento comenzara en breve";
+   mes "Quieres participar en el evento?";
+   next;
+   menu "Si",goevent,"Info",info,"No",no;
+   
+goevent:
+   set @z,1;
+   warp "guild_vs2",0,0;
+   close;
+
+info:
+   mes "[Event Flower]";
+   mes "Hay 150 Flowers";
+   mes "El primero en matar 20, gana!";
+   mes "Buena suerte.";
+   close;
+
+no:
+   mes "[Event Flower]";
+   mes "Esta bien, vuelve cuando quieras.";
+   close;
+}

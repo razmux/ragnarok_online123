@@ -1,0 +1,17 @@
+prontera,144,197,4	script	Votos a Cashpoints	564,{
+misceffect 274;
+mes "^2929E8Hola! Bip-Bip, si-me-traes-puntos-de-votacion-yo-a-cambio-te-dare-Cash-Point-para-que-puedas-canjear-en-la^000000 ^ff0000Cash-Shop^000000 ^2929E8Bip-Bip!^000000";
+
+
+if( select("Cambiar a CASH POINTS:Cancel") == 1 ){
+query_sql("SELECT `points` FROM `cp_v4p_voters` WHERE account_id='"+getcharid(3)+"' LIMIT 1",.@points);
+set #CASHPOINTS,#CASHPOINTS + .@points;
+query_sql("UPDATE `cp_v4p_voters` SET points=0 WHERE account_id='"+getcharid(3)+"'");
+dispbottom " Gained "+.@points+" Points . Total Cash Points "+#CASHPOINTS+" Points.";
+}
+close;
+
+OnInit:
+	waitingroom "Canjea puntos aqui!",0;
+
+}

@@ -1,0 +1,68 @@
+thor_camp,51,94,4	script	Entweihen	1957,{
+	if (checkweight(1201,1) == 0) {
+		mes "Tienes tu inventario lleno.";
+		close;
+	}
+	if (MaxWeight - Weight < 5000) {
+		mes "No tienes demasiado peso para soportar este item.";
+		close;
+	}	
+	disable_items;
+	mes "[Entweihen]";
+	mes "Hola, tengo el poder de entregarte este item:";
+	mes "<ITEM>" +getitemname(40114)+ "<INFO>" +40114+"</INFO></ITEM>";
+	next;
+	mes "[Entweihen]";
+	mes "Con estos item podras crear un ^ff0000 Celestial Dark Flame VIP [1 Slot] ^000000.";
+	mes "800 <ITEM>" +getitemname(6672)+ "<INFO>" +6672+"</INFO></ITEM>";
+	mes "10 <ITEM>" +getitemname(994)+ "<INFO>" +994+"</INFO></ITEM>";
+	mes "5 <ITEM>" +getitemname(969)+ "<INFO>" +969+"</INFO></ITEM>";
+	mes "1 <ITEM>" +getitemname(2680)+ "<INFO>" +2680+"</INFO></ITEM>";	
+	mes "1 <ITEM>" +getitemname(40116)+ "<INFO>" +40116+"</INFO></ITEM> [Quests Mercado]";
+	mes "1 <ITEM>" +getitemname(4431)+ "<INFO>" +4431+"</INFO></ITEM>";
+	mes "1 <ITEM>" +getitemname(2678)+ "<INFO>" +2678+"</INFO></ITEM>";	
+	mes "20 <ITEM>" +getitemname(7539)+ "<INFO>" +7539+"</INFO></ITEM>";	
+	mes "10,000,000 zeny";		
+	next;
+	mes "Tienes el Zeny?";
+						if (Zeny >= 10000000) {
+						mes "Si tienes, sigamos...";
+						next;
+					} else {
+						mes "[Charleston Smith]";
+						mes "No tienes el zeny, lo siento.";
+						close2;
+						end;
+					}
+	switch(select("Canjear"))
+	{
+		case 1:
+					if (countitem(6672) >= 800 && countitem(994) >= 10 && countitem(969) >= 5 && countitem(2680) >= 1 && countitem(40116) >= 1 && countitem(4431) >= 1 && countitem(7539) >= 20 && countitem(2678) >= 1) {
+						progressbar "ffff00",5;
+						specialeffect2 EF_REPAIRWEAPON;
+						delitem 6672,800; 
+						delitem 994,10; 
+						delitem 969,5; 
+						delitem 2680,1;
+						delitem 40116,1; 
+						delitem 4431,1;
+ 						delitem 7539,20;
+						delitem 2678,1;
+						set Zeny, Zeny - 10000000;						
+						getitem 40114,1;
+						close2;
+						end;
+					} else {
+						mes "[Entweihen]";
+						mes "No tienes los materiales.";
+						close2;
+						end;
+					}
+
+		
+
+	}
+	OnInit:
+	waitingroom "Entweihen Quets !",0;
+
+}

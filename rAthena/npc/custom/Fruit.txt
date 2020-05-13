@@ -1,0 +1,58 @@
+verus01,151,173,5	script	Fruit	10079,{
+disable_items;
+	mes "[Fruit]";
+	mes "Estoy aqui para ofrecerte poderoso equipo que puedes obtener por la instancia Last Room";
+	mes "Solo debes traerme unas extrañas piezas para poder crear estos artefactos, Cual te interesa?";
+	menu "Runaway Chip", L_WC, "Broken Chip01", L_HC, "Broken Chip02", L_SC;
+L_WC:
+	next;
+	mes "[Fruit]";
+	mes "Necesitaras 10X <ITEM>Weird Part<INFO>6034</INFO></ITEM> ";
+	mes "para crear tu <ITEM>Runnaway Chip<INFO>18997</INFO></ITEM> ";
+	mes "Deseas obtenerlo?";
+	menu "Si, dame uno",-,"No gracias",L_OUT;
+	
+	if(countitem(6034)<10) goto L_NI;
+	delitem 6034,10;
+	getitem 18997,1;
+	mes "[Fruit]";
+	mes "Disfruta de tu Runnaway Chip ^^";
+close;
+
+L_HC:
+	next;
+	mes "[Fruit]";
+	mes "Necesitaras 10X <ITEM>Weird Part<INFO>6034</INFO></ITEM>";
+	mes "Para obtener tu <ITEM>Broken Chip01<INFO>28326</INFO></ITEM>";
+	menu "Si, dame uno",-,"No gracias",L_OUT;
+	
+	if(countitem(6034)<10) goto L_NI;
+	delitem 6034,10;
+	getitem 28326,1;
+	mes "[Fruit]";
+	mes "Disfruta de tu nuevo accesorio ^^";
+close;
+
+L_SC:
+	next;
+	mes "[Fruit]";
+	mes "Necesitaras 10X <ITEM>Weird Part<INFO>6034</INFO></ITEM>";
+	mes "Para obtener tu <ITEM>Broken Chip01<INFO>28327</INFO></ITEM>";
+	menu "Si, dame uno",-,"No gracias",L_OUT;
+	
+	if(countitem(6034)<10) goto L_NI;
+	delitem 6034,10;
+	getitem 28327,1;
+	mes "[Fruit]";
+	mes "Disfruta de tu nuevo accesorio ^^";
+close;
+
+L_OUT:
+	mes "[Fruit]";
+	mes "Vuelve cuando te decidas ^^.";
+	close;
+L_NI:
+	mes "[Fruit]";
+	mes "Creo que te faltan algunos <ITEM>Weird_Part<INFO>6034</INFO></ITEM> vuelve cuando tengas los necesarios ^^ ";
+close;
+}

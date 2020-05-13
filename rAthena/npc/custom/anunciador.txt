@@ -1,0 +1,89 @@
+// Relojito by Escanor!
+// MysteryRO
+
+prontera.gat,0,0,0	script	Mensajes	-1,{
+
+OnClock0110:
+	Announce "Recuerda votar por el servidor en xro.com, asi canjeas tus puntos de Votacion por Cash Point y obtendras grandes recompensas.",16,0x70dbdb;
+	end;
+OnClock0210:
+	Announce "Las WoE's en este servidor son Martes, Sabado a las 22:00 y Miercoles 18:00 hora servidor @time",16,0x70dbdb;
+	end;
+OnClock0310:
+	Announce "Si eres nuevo pide tu pack de bienvenida en Prontera, a la izquierda de la fuente junto al NPC Nubie",16,0xFF3399;
+	end;
+OnClock0410:
+	Announce "Al conectarte a diario nuestro sistema de Daily Reward te recompenzara y podras conseguir el maximo premio en tu dia 28!",16,0x9999FF;
+	end;
+OnClock0510:
+	Announce "Invita a tus amigos a ser parte de esta gran aventura!",16,0x0080FF;
+	end;
+OnClock0610:
+	Announce "Estas perdido o no sabes hacer alguna instancia?, en nuestro foro mysteryro.cl/foro podras encontrar todo tipo de guias!",16,0xFFCCFF;
+	end;
+OnClock0710:
+	Announce "Tienes una sugerencia para nosotros? aportala en nuestro foro!",16,0xCCFF99;
+	end;
+OnClock0810:
+	Announce "Recuerda reportar todo tipo de Bug y Error que encuentres en el juego para que sea solucionado lo mas rapido posible!",16,0xFFFFCC;
+	end;
+OnClock0910:
+	Announce "Tenemos muchos comandos disponibles para ti, para problemas de posicionamiento @refresh o @load para volver a donde guardaste.",16,0x9999FF;
+	end;
+OnClock1010:
+	Announce "Recuerda votar por el servidor en xro.com, asi canjeas tus puntos de Votacion por Cash Point y obtendras grandes recompensas.",16,0x70dbdb;
+	end;
+OnClock1110:
+	Announce "Hacer instancias te ayudara ha adquirir mejor equipo y más exp!",16,0x70dbdb;
+	end;
+OnClock1210:
+	Announce "Si eres nuevo pide tu pack de bienvenida en Prontera, a la izquierda de la fuente junto al NPC Nubie",16,0xFF3399;
+	end;
+OnClock1310:
+	Announce "Al conectarte a diario nuestro sistema de Daily Reward te recompenzara y podras conseguir el maximo premio en tu dia 28!",16,0x9999FF;
+	end;
+OnClock1410:
+	Announce "Invita a tus amigos a ser parte de esta gran aventura!",16,0x0080FF;
+	end;
+OnClock1510:
+	Announce "Estas perdido o no sabes hacer alguna instancia?, en nuestro foro mysteryro.cl/foro podras encontrar todo tipo de guias!",16,0xFFCCFF;
+	end;
+OnClock1610:
+	Announce "Tienes una sugerencia para nosotros? aportala en nuestro foro!",16,0xCCFF99;
+	end;
+OnClock1710:
+	Announce "Recuerda reportar todo tipo de Bug y Error que encuentres en el juego para que sea solucionado lo mas rapido posible!",16,0xFFFFCC;
+	end;
+OnClock1810:
+	Announce "Las WoE's en este servidor son Martes, Sabado a las 22:00 y Miercoles 18:00 hora servidor @time",16,0x70dbdb;
+	end;
+OnClock1910:
+	Announce "Tenemos muchos comandos disponibles para ti, para problemas de posicionamiento @refresh o @load para volver a donde guardaste.",16,0x9999FF;
+	end;
+OnClock1940:
+	Announce "Animate a crear una party e ir a BG junto a tu grupo de amigos! podras conseguir grandes recompenzas!.",16,0x9999FF;
+	end;
+OnClock2010:
+	Announce "Recuerda votar por el servidor en xro.com, asi canjeas tus puntos de Votacion por Cash Point y obtendras grandes recompensas.",16,0x70dbdb;
+	end;
+OnClock2030:
+	Announce "Recuerda que ya puedes reciclar tus cartas en Louyang!.",16,0xFF3399;
+	end;
+OnClock2110:
+	Announce "Si eres nuevo pide tu pack de bienvenida en Prontera, a la izquierda de la fuente junto al NPC Nubie",16,0xFF3399;
+	end;
+OnClock2230:
+	Announce "Recuerda respetar las reglas de WoE y a cada player en si.",16,0xFF3399;
+	end;
+OnClock2310:
+	Announce "Recuerda reportar todo tipo de Bug y Error que encuentres en el juego para que sea solucionado lo mas rapido posible!",16,0xFFFFCC;
+	end;
+OnClock2340:
+	Announce "Animate a crear una party e ir a BG junto a tu grupo de amigos! podras conseguir grandes recompenzas!.",16,0x9999FF;
+	end;
+OnClock0010:
+	Announce "Tienes una sugerencia para nosotros? aportala en nuestro foro!",16,0xCCFF99;
+	end;
+
+
+}

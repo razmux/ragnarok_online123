@@ -1,0 +1,96 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Your Nick [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= v1.0 thanks to QM
+//============================================================
+ 
+ 
+
+comodo,173,231,5	script	Lucifer	10028,{
+set .nombre$, "[^CC0000Lucifer^000000]";
+mes .nombre$;
+switch (eventos) {
+    case 0:
+        mes "Que quieres insignificante humano!?. Espero que hayas venido por algo importante! Ahh ya veo vienes por la ^CC0000Cloak Of Casualties^000000";
+	mes ".. Humanos interesados!";
+        next;
+        mes .nombre$;
+	mes "Bueno si traes esto te la doy, de todas formas no me sirve! ^CC0000(te maldice)^000000";
+	mes "^ff0000100^000000 Angel Magic Power";
+        mes "^ff0000250^000000 Citrin";
+        mes "^ff00005^000000 Peridot";
+        mes "^ff000050^000000 Pyroxene";
+        mes "^ff000050^000000 Level 5 Lightening Bolt";
+	mes "^ff00002^000000 Transparent Plate (green)";
+	mes "^ff00002^000000 Transparent Plate (red)";
+	mes "^ff00002^000000 Transparent Plate (yellow)";
+	mes "^ff00002^000000 Transparent Plate (blue)";
+	mes "^ff00002^000000 Manteau of Gray [1]   [Garment]";
+	mes "^ff00001^000000 Diabolus Manteau [1]   [Garment]";
+	mes "^ff000010^000000 treasure box [0]";
+        next;
+        mes .nombre$;
+        mes "Cuando me traigas todo esto te la TIRARE POR LA CARA, perdon entregaré.";
+        set eventos, 1;
+        break;
+        
+    case 1:
+        mes "Que quieres insignificante humano!?. Espero que hayas venido por algo importante! Ahh ya veo vienes por la ^CC0000Cloak Of Casualties^000000";
+	mes ".. Humanos interesados!";
+specialeffect2 1039;
+        next;
+        switch (select("Si me interesa -.-:Mejor me voy..")) {
+            case 1:
+		
+                mes .nombre$;
+					if (countitem(6395) >= 100 && countitem(7295) >= 250 && countitem(7289) >= 5 && countitem(7296) >= 50 && countitem(693) >= 50 && countitem(7352) >= 2 && countitem(7353) >= 2 && countitem(7354) >= 2 && countitem(7355) >= 2 && countitem(20721) >= 2 && countitem(2537) >= 1 && countitem(7444) >= 10) { 
+                    mes "Toma! (te la arroja a la cara)";
+                
+		    delitem 6395,100;
+		    delitem 7295,250;
+ 		    delitem 7289,5;
+		    delitem 7296,50;
+		    delitem 693,50;
+		    delitem 7352,2;
+		    delitem 7353,2;
+		    delitem 7354,2;
+		    delitem 7355,2;
+		    delitem 20721,2;
+		    delitem 2537,1;
+		    delitem 7444,10;
+                    getitem 20749,1;
+		    announce ""+strcharinfo(0)+" ha conseguido la capa maldita- Cloak Of Casualties!",bc_all,0xCC0000;
+
+		   
+                } else {
+                    mes "Pff mejor no vuelvas!";
+	mes "^ff0000100^000000 Angel Magic Power";
+        mes "^ff0000250^000000 Citrin";
+        mes "^ff00005^000000 Peridot";
+        mes "^ff000050^000000 Pyroxene";
+        mes "^ff000050^000000 Level 5 Lightening Bolt";
+	mes "^ff00002^000000 Transparent Plate (green)";
+	mes "^ff00002^000000 Transparent Plate (red)";
+	mes "^ff00002^000000 Transparent Plate (yellow)";
+	mes "^ff00002^000000 Transparent Plate (blue)";
+	mes "^ff00002^000000 Manteau of Gray [1]   [Garment]";
+	mes "^ff00001^000000 Diabolus Manteau [1]   [Garment]";
+	mes "^ff000010^000000 treasure box [0]";
+                } // End if
+                break;
+                
+            case 2:
+                mes .nombre$;
+                mes "Y no vuelvas!";
+                break;
+        } // End switch
+        break;
+} // End switch
+close;
+} 

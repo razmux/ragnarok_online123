@@ -1,0 +1,21 @@
+un_bunker,363,171,5	script	Alp	615,{
+
+mes "[^CC0000Alp^000000]";
+
+mes "Por aqui encontraras el ^CC0000mysterious Bunker^000000? ";
+mes "debes tener mucho cuidado";
+mes "podrias marearte dentro!";
+
+switch(select("Investigar", "No Gracias")) {
+
+case 1:
+
+warp "un_myst",116,37;
+
+close;
+
+}
+
+end;
+
+}

@@ -1,0 +1,42 @@
+// ---
+//= Script guildmsg v1.0 [Rokimoki]
+// ---
+//= Similar al @guildmsg desarrollado por Rokimoki pero por scripting, el modo de uso:
+//= Whisp box: npc:guildmsg
+//= Chat box: Mensaje
+//= Y se enviará el mensaje a todos los miembros de tu guild sólo funciona siendo guildmaster
+// ---
+-	script	guildmsg	-1,{
+OnWhisperGlobal:
+if (getcharid(2) == 0) {
+	dispbottom "Tienes que pertenecer a alguna guild.";
+	end;
+} else if (getguildmasterid(getcharid(2)) != getcharid(0)) {
+	dispbottom "Tienes que ser el guild master de la guild.";
+	end;
+} else if (@whispervar0$ == "") {
+	dispbottom "Tienes que enviar algún mensaje...";
+	end;
+} // End if
+deletearray .@gmiembros[0], 128; // Debugg
+query_sql "SELECT account_id FROM guild_member WHERE guild_id = " +getcharid(2) +" and online = 1",.@gmiembros[0];
+
+set .@guild_master$,strcharinfo(0);
+set .@msg$,@whispervar0$;
+/*
+setd ".@array" +getcharid(2), getarraysize(@gmiembros);
+for (set .@c, 0; .@c < getd(".@array" +getcharid(2)); set .@c, .@c + 1) setd ".@miembros" +getcharid(2) +"[" +.@c +"]", @gmiembros[.@c];
+setd ".@nombre" +getcharid(2) +"$", strcharinfo(0);
+setd ".@msg" +getcharid(2) +"$", @whispervar0$;
+for (set .@c, 0; .@c < getd(".@array" +getcharid(2)); set .@c, .@c + 1) {
+	if(attachrid(getd(".@miembros" +getcharid(2) +"[" +.@c +"]")))
+		announce "[" +getd(".@nombre" +getcharid(2) +"$") +" (Guild Master)]: " +getd(".@msg" +getcharid(2) +"$"),bc_yellow|bc_self;
+} // End loop
+end;*/
+
+for (set .@c, 0; .@c < getarraysize(.@gmiembros); set .@c, .@c + 1) {
+	if(attachrid(.@gmiembros[.@c]))
+		announce "[" + .@guild_master$ +" (Guild Master)]: " + .@msg$,bc_yellow|bc_self;
+} // End loop
+end;
+} // End Script

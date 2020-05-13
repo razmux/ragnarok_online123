@@ -1,0 +1,22 @@
+niflheim.gat,191,206,4	script	Cartel	836,{		
+
+
+OnInit:
+	waitingroom "Fallen Angel Aqui!",0;
+
+}
+
+
+
+prt_in.gat,43,113,2	script	Consejero#1	755,{	
+
+OnInit:
+	waitingroom "<- Inscribete Aqui!",0;
+
+}
+
+
+
+// --------------------------------------------------
+//	Duplicates (Renewal):
+// --------------------------------------------------

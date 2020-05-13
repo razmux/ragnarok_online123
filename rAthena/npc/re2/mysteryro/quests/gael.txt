@@ -1,0 +1,93 @@
+//===== eAthena Script =======================================
+//= Quest Maker v3.0 Script
+//===== By: ==================================================
+//= Your Nick [QM]
+//===== Current Version: =====================================
+//= 1.0
+//===== Compatible With: =====================================
+//= eA SVN 5000+
+//===== Additional Comments: =================================
+//= v1.0 thanks to QM
+//============================================================
+ 
+ 
+
+yuno_in03,238,100,4	script	Gael	468,{
+set .nombre$, "[^CC0000Gael^000000]";
+mes .nombre$;
+switch (eventos) {
+    case 0:
+        mes "Hola "+strcharinfo(0)+" yo puedo crear la gran ^ff0000Evil Dragon Armor^000000 , la armadura hecha por Legendarios Dragones..";
+	mes "Te crees digno de obtener esta gran armadura?";
+        next;
+        mes .nombre$;
+	mes "Me ha costado mucho obtenerla";
+	mes "Pero si crees tener una gran volutad, traeme lo siguiente.";
+        mes "^ff00005^000000 Fire Dragon Scale";
+        mes "^ff0000300^000000 Dragon Canine";
+        mes "^ff0000300^000000 Dragon Skin";
+        mes "^ff0000200^000000 Yellow Bijou";
+	mes "^ff00001^000000 Blue Acidus Card";
+	mes "^ff00001^000000 Gold Acidus Card";
+	mes "^ff00001^000000 Dragon Breath [1][Garment]";
+	mes "^ff000010^000000 Dragon Breath Cocktail";
+	mes "^ff00001^000000 Dragon Vest [1][Body]";
+	mes "^ff00001^000000 Shadow Mist [1][Body]";
+        mes "^ff000010.000.000^000000 de zeny";
+        next;
+        mes .nombre$;
+        mes "Cuando me traigas lo siguiente te entregare esta gran armadura!";
+        set eventos, 1;
+        break;
+        
+    case 1:
+        mes "Hola "+strcharinfo(0)+" yo puedo crear la gran ^ff0000Evil Dragon Armor^000000 , la armadura hecha por Legendarios Dragones..";
+	mes "Te crees digno de obtener esta gran armadura?";
+        next;
+        switch (select("Claro que la tengo!:Mejor me voy..")) {
+            case 1:
+		
+                mes .nombre$;
+                if (countitem(7451) >= 5 && countitem(1035) >= 300 && countitem(7123) >= 300 && countitem(7448) >= 200 && countitem(4379) >= 1 && countitem(4378) >= 1 && countitem(2527) >= 1 && countitem(12080) >= 10 && countitem(2399) >= 1 && countitem(15055) >= 1) && (Zeny >= 10000000) { 
+                    mes "Veo que eres valiente, ten y disfrutala!";
+                
+		    delitem 7451,5;
+		    delitem 1035,300;
+ 		    delitem 7123,300;
+		    delitem 7448,200;
+		    delitem 4379,1;
+		    delitem 4378,1;
+		    delitem 2527,1;
+		    delitem 12080,10;
+		    delitem 2399,1;
+		    delitem 15055,1;
+		    set Zeny, Zeny - 10000000;
+                    getitem 15145,1;
+		    announce "El DragonSlayer "+strcharinfo(0)+" ha obtenido la gran Evil Dragon Armor!",bc_all,0xCC0000;
+
+		   
+                } else {
+                    mes "La armadura no te cree digno de usarla aun! Traeme lo que falta!";
+        mes "^ff00005^000000 Fire Dragon Scale";
+        mes "^ff0000300^000000 Dragon Canine";
+        mes "^ff0000300^000000 Dragon Skin";
+        mes "^ff0000200^000000 Yellow Bijou";
+	mes "^ff00001^000000 Blue Acidus Card";
+	mes "^ff00001^000000 Gold Acidus Card";
+	mes "^ff00001^000000 Dragon Breath [1][Garment]";
+	mes "^ff000010^000000 Dragon Breath Cocktail";
+	mes "^ff00001^000000 Dragon Vest [1][Body]";
+	mes "^ff00001^000000 Armor of Nothingness [1][Body]";
+        mes "^ff000010.000.000^000000 de zeny";
+                } // End if
+                break;
+                
+            case 2:
+                mes .nombre$;
+                mes "Es mejor aceptar que no eres digno de ella!";
+                break;
+        } // End switch
+        break;
+} // End switch
+close;
+} 

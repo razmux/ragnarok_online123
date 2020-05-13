@@ -1,0 +1,182 @@
+-	script	announce_nvz	-1,{
+
+OnMinute29:
+
+if(agitcheck() == 1) end;
+
+announce "test.",0;
+killmonsterall "quiz_02";
+sleep 5000;
+announce "test.",0;
+enablenpc "Anfitrion";
+sleep 55000;
+announce "test.",0;
+sleep 30000;
+announce "test.",0;
+sleep 25000;
+announce "test... 5",0;
+sleep 1000;
+announce "test",0;
+sleep 1000;
+announce "test",0;
+sleep 1000;
+announce "test",0;
+sleep 1000;
+announce "test",0;
+sleep 1000;
+announce "test",0,0x00FF00;
+mapannounce "quiz_02","Tenemos Intrusos, Carguen las Armas y suelten a las plagas!",0;
+mapannounce "quiz_02","Armas Listas jefe, no creo que duren Mucho!",0;
+monster "quiz_02",287,266,"Shock Railgun",1664,1;
+monster "quiz_02",320,266,"Stone Railgun",1667,1;
+monster "quiz_02",286,234,"Fire Railgun",1665,1;
+monster "quiz_02",321,234,"Ice Railgun",1665,1;
+monster "quiz_02",299,259,"Sabandija",1999,1;
+monster "quiz_02",309,259,"Sabandija",1999,1;
+monster "quiz_02",299,251,"Sabandija",1999,1;
+monster "quiz_02",309,251,"Sabandija",1999,1;
+disablenpc "Anfitrion";
+sleep 19000;
+mapannounce "quiz_02","Que ha pasado? Como Rayos siguen con vida?",0;
+sleep 5000;
+mapannounce "quiz_02","Lo siento jefe, son mucho mas fuertes de lo que pensaba.",0;
+sleep 3000;
+mapannounce "quiz_02","Envia Las Abejas Asesinas, Veamos si asi acabamos con estas escorias!",0;
+sleep 5000;
+mapannounce "quiz_02","Ya estan llegando mi Amo, pronto estos humanos no sabran ni que los alcanzo!",0;
+sleep 3000;
+monster "quiz_02",294,247,"Deadly Stinger",1303,3;
+sleep 2000;
+monster "quiz_02",316,236,"Deadly Stinger",1303,3;
+sleep 1000;
+monster "quiz_02",317,263,"Deadly Stinger",1303,3;
+sleep 1000;
+monster "quiz_02",288,263,"Deadly Stinger",1303,3;
+mapannounce "quiz_02","Mas que seguro que esta Queen Stinger acabara con ellos!!",0;
+sleep 3000;
+monster "quiz_02",303,251,"Deadly Stinger Queen",1994,1;
+sleep 14000;
+mapannounce "quiz_02","Maldita sea, siguen Con vida! Saca de la jaula a las Serpientes, y que el veneno los consuma.",0;
+sleep 5000;
+mapannounce "quiz_02","Entendido mi maestro..",0;
+sleep 5000;
+mapannounce "quiz_02","Las viboras los borraran de la historia.",0;
+sleep 3000;
+monster "quiz_02",315,240,"Vibora Relampago",1037,10;
+sleep 2000;
+monster "quiz_02",315,240,"Vibora Relampago",1037,10;
+sleep 2000;
+mapannounce "quiz_02","Viboras liberadas, estan llegando cual si fueran rayo! haha.",0;
+monster "quiz_02",287,248,"Vibora Relampago",1037,10;
+sleep 2000;
+monster "quiz_02",303,234,"Vibora Relampago",1037,10;
+sleep 16000;
+mapannounce "quiz_02","Santo Cielo, las viboras no han podido solas! Tendre que soltar a las viboras del Gabon!.",0;
+sleep 4000;
+mapannounce "quiz_02","No crei que tuviera necesidad de liberar creaturas Legendarias!.",0;
+monster "quiz_02",303,252,"Vibora del Gabon",1993,1;
+monster "quiz_02",313,240,"Vibora del Gabon",1993,1;
+monster "quiz_02",291,266,"Vibora del Gabon",1993,1;
+monster "quiz_02",291,266,"Vibora del Gabon",1993,1;
+sleep 6000;
+mapannounce "quiz_02","El veneno de estas serpientes es Terriblemente Mortal!.",0;
+sleep 7000;
+mapannounce "quiz_02","Para asegurarme que no vivan del todo soltare a un magnifico tendrillion!.",0;
+monster "quiz_02",291,266,"Leon Supremo",1991,1;
+sleep 7000;
+mapannounce "quiz_02","Nadie sobrevive a eso.",0;
+initnpctimer;
+end;
+
+OnTimer5000:
+if ( getmapusers("quiz_02") == 0 )
+{
+announce "'Sobrevivencia Extrema ha concluido. No hay nadie en el mapa.",0;
+killmonsterall "quiz_02";
+disablenpc "Prize";
+stopnpctimer;
+end;
+}
+else if ( getmapusers("quiz_02") > 1 )
+{
+if ($@NvZCounter >= 5){
+    switch(rand(0,2)){
+        case 0: mapannounce "quiz_01",getmapusers("quiz_02") +" jugadores siguen con vida.",0,0x00FF00; break;
+        case 1: mapannounce "quiz_01",getmapusers("quiz_02") +" jugadores siguen vivos!? seguramente estan haciendo trampa?",0,0x00FF00; break;
+        case 2: mapannounce "quiz_01",getmapusers("quiz_02") +" jugadores TODAVIA ESTAN VIVOS? Definitivamente, tendre que reportarlos.",0,0x00FF00; break;
+        }
+} else {
+    mapannounce "quiz_02",getmapusers("quiz_02") +" jugadores aun siguen vivos.",0,0x00FF00;
+}
+sleep 10000;
+set $@NvZCounter,$@NvZCounter+1;
+initnpctimer;
+end;
+}
+initnpctimer;
+end;
+
+OnPCDieEvent:
+getmapxy .@mapnvz$,.@xnvz,.@ynvz,0;
+if ( .@mapnvz$ == "quiz_02") {
+sleep2 1;
+warp "prontera",156,223;
+atcommand "@alive "+ strcharinfo(0);
+announce "Que horror " + strcharinfo(0) + " No logro Sobrevivir!.",0;
+getitem 7828,25;
+dispbottom "Haz perdido, premio de consolacion 25 Bravery Badges";
+}
+sleep2 1000;
+if ( .@mapnvz$ == "quiz_02" && getmapusers("quiz_02") == 1 ) {
+killmonsterall "quiz_02";
+mapannounce "quiz_02","Felicidades, haz ganado por favor acercate al NPC Premiador.",0;
+enablenpc "Prize";
+set $@NvZCounter,0;
+stopnpctimer;
+end;
+}
+end;
+}
+
+quiz_02,303,263,3	script	Prize	72,{
+if (sex == 1) {
+announce "Felicidades 'Es un Super Sobreviviente', " + strcharinfo (0) + " ha ganado! muy bien por el!",0;
+}
+else {
+announce "Felicidades 'para nuestra hermosisima' " + strcharinfo (0) + " que ganado el Evento Ultimo Sobreviviente",0;
+};
+
+//PREMIOS
+
+getitem 7539,25;
+
+warp "prontera",156,223;
+sleep2 250;
+disablenpc "Prize";
+end;
+}
+
+sec_in02,15,30,6	script	Anfitrion	481,{
+if (BaseLevel < 60) goto L_No;
+
+percentheal 100,100;
+warp "quiz_02",303,248;
+end;
+
+L_No:
+mes "Eres demasiado debil para entrar, yo no quiero cargos de conciencia, anda ve a matar porings.";
+close;
+
+OnInit:
+	disablenpc "Anfitrion";
+	disablenpc "Prize";
+	end;
+}
+
+// mapflag
+
+quiz_02	mapflag	nocommand	2 
+quiz_02	mapflag	noteleport
+quiz_02	mapflag	nomemo
+quiz_02	mapflag	nosave	SavePoint
+quiz_02	mapflag	nobranch

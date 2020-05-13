@@ -1,0 +1,63 @@
+bat_room,160,147,3	script	Telma	628,{
+misceffect 408;
+cutin "bu_du1",2;
+mes "[^FF0000Telma^000000]";
+	mes "Bienvenido guerrero de MysteryRO!.";
+	mes "Necesitas refuerzo para tus batallas?";
+	mes "Tengo consumibles! los intercambio por ^FF0000Medallas de BG^000000!";
+	next;
+	
+	switch(select("Siege White Potion Box :Siege Violet Potion Box:3 Poison Bottle:20 Fire Bottle:20 Acid Bottle:30 Plant Bottle:30 Marine Sphere Bottle:15 Glistening Coat:50 Yellow Gemstone:50 Red Gemstone:100 Blue Gemstone:5 Speed Potion:20 Cobweb")) {
+		case 1:	callsub S_Buy,12679,1;	// Condensed White Potion
+		case 2:	callsub S_Buy,12676,1;	// Blue Potion
+		case 3:	callsub S_Buy,678,3;	// Poison Bottle
+		case 4:	callsub S_Buy,7135,20;	// Fire Bottle
+		case 5:	callsub S_Buy,7136,20;	// Acid Bottle
+		case 6:	callsub S_Buy,7137,30;	// Plant Bottle
+		case 7:	callsub S_Buy,7138,30;	// Marine Sphere Bottle
+		case 8:	callsub S_Buy,7139,15;	// Glistening Coat
+		case 9:	callsub S_Buy,715,50;	// Yellow Gemstone
+		case 10:	callsub S_Buy,716,50;	// Red Gemstone
+		case 11:	callsub S_Buy,717,100;	// Blue Gemstone
+		case 12:	callsub S_Buy,12016,5;	// Speed Potion
+		case 13:	callsub S_Buy,1025,20;	// Cobweb
+	}
+	end;
+	cutin "bu_du1",255;
+
+S_Buy:
+	mes "[^FF0000Telma^000000]";
+	mes "Así que necesitas ^0000FF"+getarg(1)+" "+getitemname(getarg(0))+"s^000000...";
+	mes "Recuerda que ^FF0000los Siege^000000, sólo pueden ser usadas dentro de Battlegrounds.";
+	mes "Y te costará Medallas de BG (badge)...";
+	next;
+	switch(select("Darle 2 Bravery Badge:Darle 2 Valor Badge:Darle 3 War Badges")) {
+		case 1:	set .@badge, 7828;	set .@cost, 2;	break;
+		case 2:	set .@badge, 7829;	set .@cost, 2;	break;
+		case 3:	set .@badge, 7773;	set .@cost, 3;
+			mes "[^FF0000Telma^000000]";
+			mes "Aún no está disponible la recompensa por medio de este tipo de medallas...";
+			cutin "bu_du1",255;
+			close;
+
+	}
+	if (countitem(.@badge) < .@cost) {
+		mes "[^FF0000Telma^000000]";
+		mes "No cuentas con ninguna ^FF0000"+getitemname(.@badge)+"s^000000 para intercambiar por "+getarg(1)+" "+getitemname(getarg(0))+"s.";
+		cutin "bu_du1",255;
+		close;
+	} else if (!checkweight(getarg(0),getarg(1))) {
+		mes "[Telma]";
+		mes "Tienes demasiado peso en tu inventario, vacialo en @storage antes del intercambio.";
+		cutin "bu_du1",255;		
+		close;
+	}
+	delitem .@badge, .@cost;
+	getitem getarg(0),getarg(1);
+	mes "[^FF0000Telma^000000]";
+	mes "Aqui tienes tu: ^0000FF"+getarg(1)+" "+getitemname(getarg(0))+"s^000000!!";
+	mes "Recuerda que son para ser usadas en Battlegrounds!, Suerte compañero de Batallas.";
+	cutin "bu_du1",255;
+	close;
+}
+

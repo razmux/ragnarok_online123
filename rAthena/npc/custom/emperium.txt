@@ -1,0 +1,277 @@
+//================================================================================================================================================
+//EVENTO EMPERIUM BREAKER
+//PARA MYSTERY RO
+//CONSISTE EN ROMPER UN EMPERIUM EN CIERTO MAPA PVP
+//CUANDO EL EVENTO TERMINA, SE CANCELA EL PVP
+//EL MAPA AQUI ES SOLO DE EJEMPLO, SE PUEDE CAMBIAR
+//GANA EL QUE ROMPA EL EMPERIUM
+//LOS GMS ELIGEN CUANDO ACTIVARLO
+//LOS GMS PUEDEN ELEGIR EL PREMIO
+//LOS POSIBLES PREMIOS SON 1 BOLSA DE ORO,3 ITEMS DE EXP,3 ITEMS DE DROP,5 SCROLL DE ESENCIA,CAJA DE COMIDAS o 1 CONVEX MIRROR BOX (SIRVEN PARA RASTREAR MVPS)
+//RECORDAR PONER NOMEMO,NOTELEPORT,NOWARP ETC... EN EL MAPA DEL EVENTO ANTES DE IMPLEMENTAR
+//SUGERENCIA: HACER UNA COPIA DEL EMPERIUM,CUSTOM, CON MAS HP, PARA QUE EL EVENTO DURE MAS.
+//SUGERENCIA: HACER UNA MODALIDAD QUEST
+//================================================================================================================================================
+
+
+prontera,155,119,4	script	Evento Emperium Breaker::Emperium#001	1288,{
+
+if(getgmlevel()>=50){
+
+if($Delay == 1){
+mes "[^FF8000Emperium Event^000000]";
+mes "Espera que el evento termine de iniciar para usar el npc otra vez.";
+close;
+}
+else{
+if($Switch == 1){
+mes "[^FF8000Emperium Event^000000]";
+mes "El evento esta activado, que deseas hacer?";
+menu "Usar el NPC Normalmente",L_Normal,"Apagar el evento",L_Apagar,"Salir",L_Salir;
+}
+else{
+mes "[^FF8000Emperium Event^000000]";
+mes "Hola GM, que deseas hacer?";
+next;
+menu "Activar el evento",L_Activar,"Elegir premio para el ganador",L_Elegir,"Usar el NPC Normalmente",L_Normal,"Salir",L_Salir;
+}
+
+L_Elegir:
+	mes "[^FF8000Emperium Event^000000]";
+	mes "Que item quieres darle al ganador?";
+menu "1 Red Pot",L_Bolsa,"1 Yellow Pot",L_Exp,"1 Orange Pot",L_Drop,"1 Green Pot",L_Esencia,"1 Blue Pot",L_Convex,"1 White Pot",L_Food;
+
+L_Bolsa:
+next;
+mes "Ahora el premio es 1 Red Pot";
+set $Premio,1;
+close;
+
+L_Exp:
+next;
+mes "Ahora el premio es 1 Yellow Pot";
+set $Premio,2;
+close;
+
+L_Drop:
+
+next;
+mes "Ahora el premio es 1 Orange Pot";
+set $Premio,3;
+close;
+
+L_Esencia:
+next;
+mes "Ahora el premio es 1 Green Pot";
+set $Premio,4;
+close;
+
+L_Convex:
+next;
+mes "Ahora el premio es 1 Blue Pot";
+set $Premio,5;
+close;
+
+L_Food:
+next;
+mes "Ahora el premio es 1 White Pot";
+set $Premio,6;
+close;
+	
+L_Activar:
+if($Premio != 1){
+goto L_Activar2;
+}
+else{
+goto L_Iniciar;
+}
+
+L_Activar2:
+if($Premio != 2){
+goto L_Activar3;
+}
+else{
+goto L_Iniciar;
+}
+L_Activar3:
+if($Premio != 3){
+goto L_Activar4;
+}
+else{
+goto L_Iniciar;
+}
+L_Activar4:
+if($Premio != 4){
+goto L_Activar5;
+}
+else{
+goto L_Iniciar;
+}
+L_Activar5:
+if($Premio != 5){
+goto L_Activar6;
+}
+else{
+goto L_Iniciar;
+}
+L_Activar6:
+if($Premio != 6){
+goto L_NoPremio;
+}
+else{
+goto L_Iniciar;
+}
+
+L_NoPremio:
+mes "[^FF8000Emperium Event^000000]";
+mes "No hay ningun premio asignado, por favor, asigna uno antes de comenzar el evento";
+close;
+
+L_Iniciar:
+	mes "[^FF8000Emperium Event^000000]";
+	mes "Has activado el evento";
+	set $Delay,1;
+	set $Switch,1;
+	announce "El Evento Emperium Breaker esta por comenzar en Modificar",bc_yellow|bc_all;
+	initnpctimer;
+	close;
+	end;
+OnTimer10000:
+	announce "Aquel que logre romper el Emperium ganara un premio",bc_yellow|bc_all;
+	end;
+OnTimer20000:
+if($Premio == 1){
+announce "El Premio actual es: 1 Red Pot",bc_yellow|bc_all;
+}
+if($Premio == 2){
+announce "El Premio actual es: 1 Yellow Pot",bc_yellow|bc_all;
+}
+if($Premio == 3){
+announce "El Premio actual es: 1 Orange Pot",bc_yellow|bc_all;
+}
+if($Premio == 4){
+announce "El Premio actual es: 1 Green Pot",bc_yellow|bc_all;
+}
+if($Premio == 5){
+announce "El Premio actual es: 1 Blue Pot",bc_yellow|bc_all;
+}
+if($Premio == 6){
+announce "El Premio actual es: 1 White Pot",bc_yellow|bc_all;
+}
+	set $Delay,0;
+	monster "pvp_n_2-5",99,100,"Event Emperium",1288,1,"Emperium#001::OnEmperium";
+	setmapflag "pvp_n_2-5",mf_pvp;
+	end;
+
+OnEmperium:
+	set $Emperium,$Emperium+1;
+	if ($Emperium == 1){
+		announce "El usuario ["+strcharinfo(0)+"] rompio el Emperium, El evento termino.",bc_yellow|bc_all;
+		removemapflag "pvp_n_2-5",mf_pvp;
+		warp "payon",153,224;
+if($Premio == 1){
+getitem 501,1;
+}
+if($Premio == 2){
+getitem 503,1;
+}
+if($Premio == 3){
+getitem 502,1;
+}
+if($Premio == 4){
+getitem 506,1;
+}
+if($Premio == 5){
+getitem 505,1;
+}
+if($Premio == 6){
+getitem 504,1;
+}
+set $Switch,0;
+set $Emperium,0;
+}
+end;
+}
+
+L_Normal:
+if($Switch == 1){
+mes "[^FF8000Emperium Event^000000]";
+mes "Deseas ir al evento Emperium Breaker?";
+menu "Si",L_ir,"No",L_Salir;
+}
+else{
+mes "[^FF8000Emperium Event^000000]";
+mes "El evento no esta activado";
+close;
+}
+L_ir:
+
+	switch( rand(4) ) {
+		case 0:	warp "pvp_n_2-5",100,60;
+			announce "El Emperium se encuentra en el centro de la arena",bc_blue|bc_self;
+			break;
+		case 1:	warp "pvp_n_2-5",60,99;
+			announce "El Emperium se encuentra en el centro de la arena",bc_blue|bc_self;
+			break;
+		case 2:	warp "pvp_n_2-5",100,139;
+			announce "El Emperium se encuentra en el centro de la arena",bc_blue|bc_self;
+			break;
+		case 3: warp "pvp_n_2-5",139,99;
+			announce "El Emperium se encuentra en el centro de la arena",bc_blue|bc_self;
+			break;
+		}
+
+
+end;
+
+L_Salir:
+mes "[^FF8000Emperium Event^000000]";
+mes "Vuelve cuando quieras";
+close;
+
+L_Apagar:
+mes "[^FF8000Emperium Event^000000]";
+mes "Estas totalmente seguro de que quieres terminar el evento?";
+menu "Si, seguro.",L_Seguro,"No",L_Salir;
+close;
+
+L_Seguro:
+next;
+mes "[^FF8000Emperium Event^000000]";
+mes "Has terminado el evento.";
+set $Emperium,0;
+set $Switch,0;
+killmonsterall "pvp_n_2-5";
+removemapflag "pvp_n_2-5",mf_pvp;
+announce "El GM "+strcharinfo(0)+" ha terminado el evento Emperium Breaker.",bc_yellow|bc_all;
+close;
+}
+
+
+else{
+goto L_Normal;
+}
+}
+
+pvp_n_2-5,134,99,4	script	Salir del evento::Salida#001	857,{
+mes "[^FF8000Salida^000000]";
+mes "Estas seguro de que quieres salir?";
+menu "Si",L_Payon,"No",L_Quedarse;
+close;
+
+L_Louyang:
+	warp "payon",153,224;
+	end;
+L_Quedarse:
+	next;
+	mes "[^FF8000Salida^000000]";
+	mes "Ok";
+close;
+end;
+}
+
+
+
+pvp_n_2-5,99,134,4	duplicate(Salida#001)	Salir del evento#1	857
+pvp_n_2-5,65,100,4	duplicate(Salida#001)	Salir del evento#2	857
+pvp_n_2-5,100,64,4	duplicate(Salida#001)	Salir del evento#3	857

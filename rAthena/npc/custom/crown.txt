@@ -1,0 +1,47 @@
+prt_in,38,106,4	script	Nubie#Gift	612,{
+   if( BaseLevel > 99 ){
+   mes "[^000088Nubie^000000]";
+   mes "Ya estás grande!";
+   end;
+   }
+
+   if( #freebies == 1){
+   mes "[^000088Nubies^000000]";
+   mes "Ya posees el pack de bienvenida!";
+  
+   close;
+   } 
+   else{
+
+   mes "[^000088Nubie^000000]";
+   mes "Hola bienvenido a Mystery RO!";
+   mes "Tenemos ayuda para ti.";
+   mes "Recibela.";
+   next;
+   mes "[^000088Nubie^000000]";
+   mes "Tu pack de bienvenida ha sido otorgado.";
+   mes "Revisa tu inventario";
+   next;
+
+   getitem 2576,1;
+   getitem 12992,1;
+   getitem 14172,1;
+   getitem 12913,1;
+   getitem 13600,1;
+   getitem 601,50;
+   getitem 7539,50;
+   getitem 5040,1;
+   getitem 5153,1;
+   getitem 1109,1;
+   getitem 9004,1;
+   getitem 643,1;
+   getitem 534,10;
+   
+   set #freebies, 1;
+   specialeffect2 622;
+   mes "Suerte en tus futuras batallas!";
+   close;
+   } 
+OnInit:
+	waitingroom "Pack Bienvenida!",0;
+}

@@ -1,0 +1,8 @@
+-	script	pvp_ann	-1,{
+OnPCLoadMapEvent:
+	if (strcharinfo(3) == "bat_room")
+		announce "El player "+ strcharinfo(0) + " ah entrado a Battleground!",0;
+	end;
+}
+// - Map flags
+bat_room	mapflag	loadevent

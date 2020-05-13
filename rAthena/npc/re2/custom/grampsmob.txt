@@ -1,0 +1,23 @@
+//===== rAthena Script =======================================
+//= bossnia 4 gramps Monsters Spawn Script
+//===== Changelogs: ==========================================
+//= 1.0 First Version. [zaleos]
+//============================================================
+
+//==================================================
+// bossnia_01 - Dragon's Nest
+//==================================================
+bossnia_01,0,0	monster	Waste Stove	1617,120
+bossnia_01,0,0	monster	Desert Wolf	1106,120
+
+//==================================================
+// bossnia_02 - Dragon's Nest
+//==================================================
+bossnia_02,0,0	monster	Necromancer	1870,120
+bossnia_02,0,0	monster	Blue Acidus	1716,120
+
+//==================================================
+// bossnia_03 - Dragon's Nest
+//==================================================
+bossnia_03,0,0	monster	Margaretha Sorin	1637,120
+bossnia_03,0,0	monster	Dolomedes	2092,120

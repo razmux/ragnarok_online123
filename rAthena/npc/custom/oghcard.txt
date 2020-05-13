@@ -1,0 +1,62 @@
+glast_01,188,273,5	script	White Knight#1a	4_WHITEKNIGHT,{
+disable_items;
+mes("[White Knight]"); // custom
+if (MaxWeight - Weight < 1000) {
+mes("Your bag is too heavy. Reduce some weight and come back.");
+close;
+}
+mes("I exchange you a White Knight Card for ^0000FF3000 Coagulated Spell^000000 or ^FF000070 Contaminated Magic^000000.");
+next;
+setarray .@item[0],6608,6755;
+setarray .@cost[0], 3000, 70;
+.@select = select("Cancel", "^0000FFUse Coagulated Spell^000000", "^FF0000UseContaminated Magic^000000");
+switch (.@select) {
+case 1:
+mes("[White Knight]");
+mes("Come back any time.");
+close;
+case 2:
+case 3:
+.@item = .@item[.@select-2];
+.@cost = .@cost[.@select-2];
+if (countitem(.@item) < .@cost) {
+mes("[White Knight]");
+mes("Bring me",.@cost,getitemname(.@item));
+next;
+}
+delitem .@item,.@cost;
+getitem 4608,1;
+close;
+}
+}
+glast_01,192,273,3	script	Khalitzburg Knight#1a	4_F_KHALITZBURG,{
+disable_items;
+mes("[Khalitzburg Knight]"); // custom
+if (MaxWeight - Weight < 1000) {
+mes("Your bag is too heavy. Reduce some weight and come back.");
+close;
+}
+mes("I exchange you a Khalitzburg Knight Card for ^0000FF5000 Coagulated Spell^000000 or ^FF0000100 Contaminated Magic^000000.");
+next;
+setarray .@item[0],6608,6755;
+setarray .@cost[0], 5000,100;
+.@select = select("Cancel", "^0000FFUse Coagulated Spell^000000", "^FF0000UseContaminated Magic^000000");
+switch (.@select) {
+case 1:
+mes("[Khalitzburg Knight]");
+mes("Come back any time.");
+close;
+case 2:
+case 3:
+.@item = .@item[.@select-2];
+.@cost = .@cost[.@select-2];
+if (countitem(.@item) < .@cost) {
+mes("[Khalitzburg Knight]");
+mes("Bring me",.@cost,getitemname(.@item));
+next;
+}
+delitem .@item,.@cost;
+getitem 4609,1;
+close;
+}
+}
